@@ -1,9 +1,9 @@
-package marketplace.PharmaciaOrientadaAObjeto.Service.HttpService;
+package marketplace.PharmaciaOrientadaAObjeto.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import marketplace.PharmaciaOrientadaAObjeto.Service.HttpService.CEP.ResponseClass;
+import marketplace.PharmaciaOrientadaAObjeto.model.CEP.Endereço;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
@@ -12,19 +12,19 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 @Service
-public class HttpService {
+public class CepService {
 
 
     HttpClient httpclient;
 
 
-    public HttpService(HttpClient httpclient) {
+    public CepService(HttpClient httpclient) {
         this.httpclient = httpclient;
 
     }
 
 
-    public  ResponseClass GetCEP(String cep) {
+    public Endereço GetCEP(String cep) {
 
         try {
             var request = HttpRequest
@@ -43,10 +43,10 @@ public class HttpService {
                         ObjectMapper mapper = new ObjectMapper();
 
                         try{
-                            ResponseClass responseClass;
-                            responseClass = mapper.readValue(body, ResponseClass.class);
+                            Endereço endereço;
+                            endereço = mapper.readValue(body, Endereço.class);
 
-                            return responseClass;
+                            return endereço;
 
 
                         }  catch (JsonMappingException e) {

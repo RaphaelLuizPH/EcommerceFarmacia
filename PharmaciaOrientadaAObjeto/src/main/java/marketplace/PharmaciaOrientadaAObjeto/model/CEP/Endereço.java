@@ -1,6 +1,6 @@
-package marketplace.PharmaciaOrientadaAObjeto.Service.HttpService.CEP;
+package marketplace.PharmaciaOrientadaAObjeto.model.CEP;
 
-public class ResponseClass {
+public class Endereço {
     public String cep;
     public String logradouro;
     public String complemento;

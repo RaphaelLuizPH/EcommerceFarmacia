@@ -1,9 +1,8 @@
-package marketplace.PharmaciaOrientadaAObjeto.Configuration;
+package marketplace.PharmaciaOrientadaAObjeto.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.net.Authenticator;
 import java.net.http.HttpClient;
 import java.time.Duration;
 
