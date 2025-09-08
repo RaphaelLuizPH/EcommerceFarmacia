@@ -1,4 +1,4 @@
-package marketplace.PharmaciaOrientadaAObjeto.Service.Json;
+package marketplace.PharmaciaOrientadaAObjeto.service.Json;
 
 import java.util.List;
 
