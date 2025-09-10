@@ -1,4 +1,4 @@
-package marketplace.PharmaciaOrientadaAObjeto.Service;
+package marketplace.PharmaciaOrientadaAObjeto.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
