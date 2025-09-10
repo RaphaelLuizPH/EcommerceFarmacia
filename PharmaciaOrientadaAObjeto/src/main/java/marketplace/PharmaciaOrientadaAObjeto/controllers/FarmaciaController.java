@@ -1,11 +1,10 @@
 package marketplace.PharmaciaOrientadaAObjeto.controllers;
 
 import lombok.RequiredArgsConstructor;
-import marketplace.PharmaciaOrientadaAObjeto.service.FarmaciaService;
+import marketplace.PharmaciaOrientadaAObjeto.Service.FarmaciaService;
 import marketplace.PharmaciaOrientadaAObjeto.model.Farmacia.Farmacia;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,7 +26,5 @@ class FarmaciaController {
       return  farmaciaService.Add(farmacia);
     }
 
-    public Optional<Farmacia> getById(String cnpj) {
-            return farmaciaService.GetById(cnpj);
-    }
+
 }
