@@ -1,12 +1,11 @@
-package marketplace.PharmaciaOrientadaAObjeto.service;
+package marketplace.PharmaciaOrientadaAObjeto.Service;
 
 import lombok.RequiredArgsConstructor;
-import marketplace.PharmaciaOrientadaAObjeto.repository.IFarmaciaRepositorio;
+import marketplace.PharmaciaOrientadaAObjeto.Repositorio.IFarmaciaRepositorio;
 import marketplace.PharmaciaOrientadaAObjeto.model.Farmacia.Farmacia;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -26,8 +25,5 @@ public class FarmaciaService {
         return repositorio.save(farmacia);
     }
 
-    public Optional<Farmacia> GetById(String cnpj) {
-        return repositorio.findById(cnpj);
-    }
 
 }
