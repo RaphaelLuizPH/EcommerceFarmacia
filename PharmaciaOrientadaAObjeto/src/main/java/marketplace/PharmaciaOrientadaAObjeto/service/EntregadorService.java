@@ -27,7 +27,7 @@ public class EntregadorService {
     }
 
     public Optional<Entregador> findByCNH(String cnh) {
-        return repositorio.findByCNH(cnh);
+        return repositorio.findByCnh(cnh);
     }
 
 }

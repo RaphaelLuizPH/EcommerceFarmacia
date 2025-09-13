@@ -13,10 +13,10 @@ import lombok.Setter;
 public class Entregador extends Usuario {
     @Id
     @EqualsAndHashCode.Include
-    private String CNH;
+    private String cnh;
     
     @Override
     public String getDescricao () {
-        return String.format("Entregador: %s CNH = %s", getNome(), getCNH());
+        return String.format("Entregador: %s CNH = %s", getNome(), getCnh());
     }
 }
