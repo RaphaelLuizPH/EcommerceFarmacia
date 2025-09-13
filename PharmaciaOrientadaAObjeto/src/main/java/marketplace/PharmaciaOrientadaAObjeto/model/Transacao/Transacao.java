@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import marketplace.PharmaciaOrientadaAObjeto.model.Farmacia.Farmacia;
+import marketplace.PharmaciaOrientadaAObjeto.model.Pagamento.Pagamento;
 import marketplace.PharmaciaOrientadaAObjeto.model.Produto.Produto;
 import marketplace.PharmaciaOrientadaAObjeto.model.Usuario.Cliente;
 import marketplace.PharmaciaOrientadaAObjeto.model.Usuario.Endereco.Endereco;
@@ -32,7 +33,9 @@ public class Transacao {
 
     List<Produto> produtos;
 
-    // Pagamento pagamento;
+     @ManyToOne
+     @JoinColumn(name = "pagamento_id_tipo")
+     Pagamento pagamento;
 
     Date data;
 
