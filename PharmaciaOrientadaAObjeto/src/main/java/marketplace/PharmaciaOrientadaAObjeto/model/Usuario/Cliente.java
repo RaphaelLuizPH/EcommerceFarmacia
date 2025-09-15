@@ -1,5 +1,6 @@
 package marketplace.PharmaciaOrientadaAObjeto.model.Usuario;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -14,8 +15,8 @@ public class Cliente extends Usuario {
     @Id
     @EqualsAndHashCode.Include
     private String cpf;
-    
-    @OneToOne
+
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Endereco enderecoCliente;
     
     @Override

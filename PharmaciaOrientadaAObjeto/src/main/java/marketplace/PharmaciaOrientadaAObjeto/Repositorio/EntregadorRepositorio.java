@@ -12,4 +12,6 @@ public interface EntregadorRepositorio extends JpaRepository<Entregador, String>
 
 
     Optional<Entregador> findByCnh(String cnh);
+
+
 }

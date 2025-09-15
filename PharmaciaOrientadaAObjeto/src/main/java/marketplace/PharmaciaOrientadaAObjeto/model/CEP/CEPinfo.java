@@ -1,6 +1,6 @@
 package marketplace.PharmaciaOrientadaAObjeto.model.CEP;
 
-public class Endereço {
+public class CEPinfo {
     public String cep;
     public String logradouro;
     public String complemento;
