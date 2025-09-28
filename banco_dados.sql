@@ -1,3 +1,6 @@
+
+DROP DATABASE farmacia_marketplace;
+
 SET NAMES utf8mb4; #isso e para suportar o caracteres unicode vai que o nome do negocio e chines
 SET FOREIGN_KEY_CHECKS = 0; #Desativei a verificação de chaves estrangeiras porque tava dando ruim
 
@@ -12,7 +15,7 @@ CREATE TABLE cadastro_usuario (
   email VARCHAR(160) NOT NULL UNIQUE,
   senha_hash VARCHAR(255) NOT NULL,
   telefone VARCHAR(25),
-  perfil ENUM('CLIENTE','FAZENDEIRO','ADMIN') NOT NULL,
+  perfil ENUM('CLIENTE','ENTREGADOR','FARMACIA') NOT NULL,
   ativo TINYINT(1) NOT NULL DEFAULT 1,
   criado_em TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   atualizado_em TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
@@ -280,6 +283,26 @@ CREATE TABLE avaliacao (
   INDEX (id_produto, nota, criado_em)
 ) ENGINE=InnoDB;
 
+
+CREATE TABLE `veiculo` (
+  `placa` varchar(255) NOT NULL,
+  `cnh_entregador` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`placa`),
+  UNIQUE KEY `UKhv8vbtfscjod4xethro4a46hf` (`cnh_entregador`),
+  CONSTRAINT `FK5pctjd3oqvtngbb7sr8gsdknw` FOREIGN KEY (`cnh_entregador`) REFERENCES `entregador` (`cnh`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+CREATE TABLE `planos` (
+  `plano` varchar(255) NOT NULL,
+  `id` int auto_increment,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `plano_id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+
 CREATE TABLE log_auditoria ( -- Porque o natanael disse que e bom
   id_log        BIGINT AUTO_INCREMENT PRIMARY KEY,
   entidade      VARCHAR(80) NOT NULL,     -- ex.: 'pedido', 'estoque'
@@ -290,5 +313,141 @@ CREATE TABLE log_auditoria ( -- Porque o natanael disse que e bom
   INDEX (entidade, id_registro, criado_em)
 ) ENGINE=InnoDB;
 
-SET FOREIGN_KEY_CHECKS = 1;
+
+
+
+
+
+
+
+
+
+
+
+INSERT INTO cadastro_usuario (nome, email, senha_hash, telefone, perfil)
+VALUES 
+('João da Silva', 'joao@email.com', 'hash123', '11999999999', 'CLIENTE'),
+('Farmácia Boa', 'farmacia@email.com', 'hash456', '1133333333', 'FARMACIA'),
+('Maria Motoboy', 'maria@email.com', 'hash789', '1144444444', 'ENTREGADOR');
+
+
+INSERT INTO empresa (nome_fantasia, razao_social, cnpj, insc_estadual, descricao, nota_media)
+VALUES 
+('Farmácia Boa', 'Farmácia Boa LTDA', '12345678000199', 'IS1234', 'Farmácia de bairro', 4.5);
+
+
+INSERT INTO endereco_usuario (id_usuario, apelido, cep, logradouro, numero, complemento, bairro, cidade, estado)
+VALUES
+(1, 'Casa', '01234000', 'Rua das Flores', '123', 'Apto 101', 'Centro', 'São Paulo', 'SP');
+
+
+INSERT INTO categoria (nome, slug)
+VALUES
+('Medicamentos', 'medicamentos'),
+('Cosméticos', 'cosmeticos');
+
+
+INSERT INTO produto (id_empresa, nome, slug, descricao, unidade_medida, preco_base)
+VALUES
+(1, 'Paracetamol 500mg', 'paracetamol-500mg', 'Analgésico', 'cx', 10.50);
+
+
+INSERT INTO variacao (id_produto, sku, rotulo, preco, peso_gramas, dimensoes)
+VALUES
+(1, 'PARA500CX', 'Caixa 20 comprimidos', 10.50, 50, '10x5x2');
+
+
+INSERT INTO estoque (id_variacao, id_empresa, quantidade, minimo_alerta)
+VALUES
+(1, 1, 100, 5);
+
+
+INSERT INTO cliente (id_cliente, cpf, data_nasc) VALUES (1, '12345678901', '1990-01-01');
+INSERT INTO carrinho (id_cliente) VALUES (1);
+
+
+INSERT INTO item_carrinho (id_carrinho, id_variacao, quantidade, preco_unitario)
+VALUES (1, 1, 2, 10.50);
+
+
+INSERT INTO pedido (codigo, id_cliente, id_endereco, status, subtotal, desconto_total, frete_total)
+VALUES ('PMKT-2025-000001', 1, 1, 'CRIADO', 21.00, 0, 5.00);
+
+INSERT INTO item_pedido (id_pedido, id_variacao, id_empresa, quantidade, preco_unitario)
+VALUES (1, 1, 1, 2, 10.50);
+
+
+INSERT INTO pagamento (id_pedido, metodo, valor, status)
+VALUES (1, 'PIX', 26.00, 'APROVADO');
+
+
+INSERT INTO avaliacao (id_produto, id_cliente, nota, comentario)
+VALUES (1, 1, 5, 'Muito bom!');
+
+
+
+SELECT * FROM cadastro_usuario;
+
+
+SELECT * FROM empresa;
+
+
+SELECT p.nome AS produto, c.nome AS categoria
+FROM produto p
+JOIN produto_categoria pc ON p.id_produto = pc.id_produto
+JOIN categoria c ON pc.id_categoria = c.id_categoria;
+
+
+SELECT p.nome, p.preco_base 
+FROM produto p
+WHERE p.id_empresa = 1;
+
+
+UPDATE produto p set preco_base = 15.00 where id_produto = 1;
+
+
+
+SELECT v.sku, v.rotulo, v.preco
+FROM variacao v
+WHERE v.id_produto = 1;
+
+SELECT e.quantidade
+FROM estoque e
+JOIN variacao v ON e.id_variacao = v.id_variacao
+WHERE v.id_produto = 1;
+
+
+SELECT * FROM pedido WHERE id_cliente = 1;
+
+
+SELECT ip.*, v.rotulo, p.nome AS produto
+FROM item_pedido ip
+JOIN variacao v ON ip.id_variacao = v.id_variacao
+JOIN produto p ON v.id_produto = p.id_produto
+WHERE ip.id_pedido = 1;
+
+
+SELECT a.nota, a.comentario, p.nome
+FROM avaliacao a
+JOIN produto p ON a.id_produto = p.id_produto;
+
+SELECT * FROM pagamento WHERE id_pedido = 1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
