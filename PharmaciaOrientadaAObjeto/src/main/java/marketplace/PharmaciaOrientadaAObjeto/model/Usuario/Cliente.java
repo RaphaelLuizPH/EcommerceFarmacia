@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import marketplace.PharmaciaOrientadaAObjeto.model.Transacao.Transacao;
 import marketplace.PharmaciaOrientadaAObjeto.model.Usuario.Endereco.Endereco;
 
 @Entity
@@ -16,9 +17,13 @@ public class Cliente extends Usuario {
     @EqualsAndHashCode.Include
     private String cpf;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "endereco", referencedColumnName = "endereco_id")
     private Endereco enderecoCliente;
-    
+
+
+
+
     @Override
     public String getDescricao () {
         return String.format("Cliente: %s cadastro = %s", getNome(), getCpf());

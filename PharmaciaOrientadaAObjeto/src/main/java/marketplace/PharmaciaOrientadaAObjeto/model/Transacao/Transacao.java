@@ -39,8 +39,6 @@ public class Transacao {
 
     Date data;
 
-    @ManyToOne
-    @JoinColumn(name = "endereco_id_endereco")
     Endereco endereco;
 
 }

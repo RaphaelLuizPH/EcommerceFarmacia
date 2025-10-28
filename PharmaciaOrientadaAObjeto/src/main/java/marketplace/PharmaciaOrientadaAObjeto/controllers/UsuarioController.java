@@ -25,11 +25,13 @@ class UsuarioController {
     public RetornoGeral<Usuario> cadastrarUsuario(@RequestBody Cliente usuario) {
 
         var senhaCripto = cadastroHelper.criptografar(usuario.getSenha());
-
+        var requestEndereco = usuario.getEnderecoCliente();
+        var endereco = cadastroHelper.buscarEndereco(requestEndereco.getCep(), requestEndereco.getCasa());
+        usuario.setEnderecoCliente(endereco);
         usuario.setSenha(senhaCripto);
 
-               var retorno = clienteRepositorio.save(usuario);
-               return new RetornoGeral<Usuario>(true, retorno, "Salvo com sucesso" );
+       var retorno = clienteRepositorio.save(usuario);
+       return new RetornoGeral<Usuario>(true, retorno, "Salvo com sucesso" );
 
 
 
