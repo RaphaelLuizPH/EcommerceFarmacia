@@ -52,7 +52,7 @@ public class CadastroHelper {
     }
 
 
-    public Optional<Cliente> ClienteExiste(String cpf) {
+    public Cliente ClienteExiste(String cpf) {
 
       return clienteRepositorio.findByCpf(cpf);
 

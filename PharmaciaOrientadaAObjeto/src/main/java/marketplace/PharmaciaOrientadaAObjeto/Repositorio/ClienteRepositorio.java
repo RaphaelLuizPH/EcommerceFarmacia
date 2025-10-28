@@ -8,6 +8,7 @@ import java.util.Optional;
 
 public interface ClienteRepositorio extends JpaRepository<Cliente, String> {
 
+    Cliente findByCpf(String cpf);
 
-    Optional<Cliente> findByCpf(String cpf);
+    Cliente deleteClienteByCpf(String cpf);
 }
