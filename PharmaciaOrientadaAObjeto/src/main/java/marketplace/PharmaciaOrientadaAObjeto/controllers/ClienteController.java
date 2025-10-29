@@ -5,6 +5,8 @@ import marketplace.PharmaciaOrientadaAObjeto.service.ClienteService;
 import marketplace.PharmaciaOrientadaAObjeto.model.Infraestrutura.RetornoGeral;
 import marketplace.PharmaciaOrientadaAObjeto.model.Usuario.Cliente;
 import marketplace.PharmaciaOrientadaAObjeto.model.Usuario.Usuario;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,17 +19,17 @@ class ClienteController {
 
 
     @PostMapping()
-    public RetornoGeral<Usuario> cadastrarCliente(@RequestBody Cliente usuario) {
+    public ResponseEntity<RetornoGeral<Cliente>> cadastrarCliente(@RequestBody Cliente usuario) {
 
         try {
 
 
             var retorno = clienteService.Add(usuario);
-            return new RetornoGeral<>(true, retorno, "Salvo com sucesso" );
-        } catch (Exception exception) {
-            return new RetornoGeral<>(false, null, "Erro ao salvar entidade." + exception.getMessage() );
-        }
+            return ResponseEntity.ok(new RetornoGeral<>(true, retorno, "Salvo com sucesso" ));
 
+        } catch (Exception exception) {
+            return ResponseEntity.notFound().build();
+        }
 
 
 
@@ -38,26 +40,29 @@ class ClienteController {
     }
 
     @DeleteMapping("/{cpf}")
-    public RetornoGeral<Usuario> deletarCliente(@PathVariable String cpf) {
+    public ResponseEntity<RetornoGeral<Usuario>> deletarCliente(@PathVariable String cpf) {
 
         try {
-
             clienteService.Delete(cpf);
-            return new RetornoGeral<>(true, null, "Deletado com sucesso");
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new RetornoGeral<>(true, null, "Deletado com sucesso" ));
         } catch (Exception exception) {
-            return new RetornoGeral<>(false, null, "Erro ao deletar entidade." + exception.getMessage() );
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new RetornoGeral<>(false, null, "Erro ao deletar entidade." + exception.getMessage()));
         }
-
-
     }
-
 
     @GetMapping()
-    public Iterable<Cliente> getAll() {
+    public ResponseEntity<RetornoGeral<Iterable<Cliente>>> getAll() {
+        try {
+            var clientes = clienteService.GetAll();
 
-        return clienteService.GetAll();
+            return ResponseEntity.ok(new RetornoGeral<>(true, clientes, "Listado com sucesso" ));
+        } catch (Exception e) {
+            return  ResponseEntity.badRequest().body(new RetornoGeral<>(false, null, e.getMessage()));
+        }
 
     }
+
 
 
 
