@@ -1,4 +1,4 @@
-package marketplace.PharmaciaOrientadaAObjeto.Repositorio;
+package marketplace.PharmaciaOrientadaAObjeto.repository;
 
 import marketplace.PharmaciaOrientadaAObjeto.model.Produto.Produto;
 import org.springframework.data.jpa.repository.JpaRepository;

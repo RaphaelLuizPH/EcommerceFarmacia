@@ -1,4 +1,4 @@
-package marketplace.PharmaciaOrientadaAObjeto.model.Usuario.Endereco;
+package marketplace.PharmaciaOrientadaAObjeto.model.Endereco;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;

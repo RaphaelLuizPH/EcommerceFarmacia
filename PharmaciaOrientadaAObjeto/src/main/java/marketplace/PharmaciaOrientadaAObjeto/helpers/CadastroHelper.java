@@ -1,17 +1,16 @@
-package marketplace.PharmaciaOrientadaAObjeto.Helpers;
+package marketplace.PharmaciaOrientadaAObjeto.helpers;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import marketplace.PharmaciaOrientadaAObjeto.Repositorio.ClienteRepositorio;
-import marketplace.PharmaciaOrientadaAObjeto.Repositorio.EntregadorRepositorio;
-import marketplace.PharmaciaOrientadaAObjeto.Service.CepService;
+import marketplace.PharmaciaOrientadaAObjeto.repository.ClienteRepositorio;
+import marketplace.PharmaciaOrientadaAObjeto.repository.EntregadorRepositorio;
+import marketplace.PharmaciaOrientadaAObjeto.service.CepService;
 import marketplace.PharmaciaOrientadaAObjeto.model.Usuario.Cliente;
-import marketplace.PharmaciaOrientadaAObjeto.model.Usuario.Endereco.Endereco;
+import marketplace.PharmaciaOrientadaAObjeto.model.Endereco.Endereco;
 import marketplace.PharmaciaOrientadaAObjeto.model.Usuario.Entregador;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.Optional;
 
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)

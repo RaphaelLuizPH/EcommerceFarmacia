@@ -1,8 +1,7 @@
 package marketplace.PharmaciaOrientadaAObjeto.controllers;
 
 import lombok.RequiredArgsConstructor;
-import marketplace.PharmaciaOrientadaAObjeto.Helpers.CadastroHelper;
-import marketplace.PharmaciaOrientadaAObjeto.Service.ClienteService;
+import marketplace.PharmaciaOrientadaAObjeto.service.ClienteService;
 import marketplace.PharmaciaOrientadaAObjeto.model.Infraestrutura.RetornoGeral;
 import marketplace.PharmaciaOrientadaAObjeto.model.Usuario.Cliente;
 import marketplace.PharmaciaOrientadaAObjeto.model.Usuario.Usuario;

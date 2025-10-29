@@ -1,10 +1,9 @@
-package marketplace.PharmaciaOrientadaAObjeto.Service;
+package marketplace.PharmaciaOrientadaAObjeto.service;
 
-import marketplace.PharmaciaOrientadaAObjeto.Helpers.CadastroHelper;
-import marketplace.PharmaciaOrientadaAObjeto.Repositorio.ClienteRepositorio;
+import marketplace.PharmaciaOrientadaAObjeto.helpers.CadastroHelper;
+import marketplace.PharmaciaOrientadaAObjeto.repository.ClienteRepositorio;
 import lombok.RequiredArgsConstructor;
 import marketplace.PharmaciaOrientadaAObjeto.model.Usuario.Cliente;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 

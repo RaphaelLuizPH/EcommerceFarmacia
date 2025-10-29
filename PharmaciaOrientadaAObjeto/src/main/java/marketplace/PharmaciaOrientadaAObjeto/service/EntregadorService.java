@@ -1,7 +1,7 @@
-package marketplace.PharmaciaOrientadaAObjeto.Service;
+package marketplace.PharmaciaOrientadaAObjeto.service;
 
 import lombok.RequiredArgsConstructor;
-import marketplace.PharmaciaOrientadaAObjeto.Repositorio.EntregadorRepositorio;
+import marketplace.PharmaciaOrientadaAObjeto.repository.EntregadorRepositorio;
 import marketplace.PharmaciaOrientadaAObjeto.model.Usuario.Entregador;
 import org.springframework.stereotype.Service;
 

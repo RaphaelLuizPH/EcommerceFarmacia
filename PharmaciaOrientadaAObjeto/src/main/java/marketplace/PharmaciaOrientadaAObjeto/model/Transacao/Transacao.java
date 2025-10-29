@@ -7,8 +7,7 @@ import marketplace.PharmaciaOrientadaAObjeto.model.Farmacia.Farmacia;
 import marketplace.PharmaciaOrientadaAObjeto.model.Pagamento.Pagamento;
 import marketplace.PharmaciaOrientadaAObjeto.model.Produto.Produto;
 import marketplace.PharmaciaOrientadaAObjeto.model.Usuario.Cliente;
-import marketplace.PharmaciaOrientadaAObjeto.model.Usuario.Endereco.Endereco;
-import marketplace.PharmaciaOrientadaAObjeto.model.Usuario.Usuario;
+import marketplace.PharmaciaOrientadaAObjeto.model.Endereco.Endereco;
 
 import java.sql.Date;
 import java.util.List;
@@ -39,6 +38,8 @@ public class Transacao {
 
     Date data;
 
+    @ManyToOne
+    @JoinColumn(name = "endereco")
     Endereco endereco;
 
 }

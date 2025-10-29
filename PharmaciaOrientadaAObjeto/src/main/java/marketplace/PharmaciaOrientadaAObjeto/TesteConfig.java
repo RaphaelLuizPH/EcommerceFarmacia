@@ -1,7 +1,7 @@
 package marketplace.PharmaciaOrientadaAObjeto; // Pacote principal do seu projeto
 
-import marketplace.PharmaciaOrientadaAObjeto.Repositorio.CategoriaRepositorio;
-import marketplace.PharmaciaOrientadaAObjeto.Repositorio.ProdutoRepositorio;
+import marketplace.PharmaciaOrientadaAObjeto.repository.CategoriaRepositorio;
+import marketplace.PharmaciaOrientadaAObjeto.repository.ProdutoRepositorio;
 import marketplace.PharmaciaOrientadaAObjeto.model.Produto.Categoria;
 import marketplace.PharmaciaOrientadaAObjeto.model.Produto.Medicamento;
 import marketplace.PharmaciaOrientadaAObjeto.model.Produto.Produto;

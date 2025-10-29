@@ -1,12 +1,10 @@
 package marketplace.PharmaciaOrientadaAObjeto.model.Usuario;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import marketplace.PharmaciaOrientadaAObjeto.model.Transacao.Transacao;
-import marketplace.PharmaciaOrientadaAObjeto.model.Usuario.Endereco.Endereco;
+import marketplace.PharmaciaOrientadaAObjeto.model.Endereco.Endereco;
 
 @Entity
 @Table(name = "cliente")

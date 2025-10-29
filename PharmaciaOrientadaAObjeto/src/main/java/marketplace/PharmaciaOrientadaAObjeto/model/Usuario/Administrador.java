@@ -1,5 +1,6 @@
 package marketplace.PharmaciaOrientadaAObjeto.model.Usuario;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -14,7 +15,11 @@ import marketplace.PharmaciaOrientadaAObjeto.model.Farmacia.Farmacia;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 public class Administrador extends Usuario {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
+    private int AdministradorId;
+
+
     private String cpf;
     
     @ManyToOne
