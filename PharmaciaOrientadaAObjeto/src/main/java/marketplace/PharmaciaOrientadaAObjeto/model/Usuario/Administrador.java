@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import marketplace.PharmaciaOrientadaAObjeto.model.Farmacia.Farmacia;
-
+import marketplace.PharmaciaOrientadaAObjeto.model.Usuario.Usuario;
 
 @Entity
 @Table(name = "Administrador")
@@ -15,11 +15,7 @@ import marketplace.PharmaciaOrientadaAObjeto.model.Farmacia.Farmacia;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 public class Administrador extends Usuario {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    private int AdministradorId;
-
-
     private String cpf;
     
     @ManyToOne

@@ -1,6 +1,7 @@
 package marketplace.PharmaciaOrientadaAObjeto.controllers;
 
 import lombok.RequiredArgsConstructor;
+
 import marketplace.PharmaciaOrientadaAObjeto.service.ClienteService;
 import marketplace.PharmaciaOrientadaAObjeto.model.Infraestrutura.RetornoGeral;
 import marketplace.PharmaciaOrientadaAObjeto.model.Usuario.Cliente;
@@ -17,7 +18,7 @@ class ClienteController {
    private final ClienteService clienteService;
 
 
-
+    
     @PostMapping()
     public ResponseEntity<RetornoGeral<Cliente>> cadastrarCliente(@RequestBody Cliente usuario) {
 

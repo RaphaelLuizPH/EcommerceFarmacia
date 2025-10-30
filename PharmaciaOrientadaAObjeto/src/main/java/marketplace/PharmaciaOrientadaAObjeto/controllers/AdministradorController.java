@@ -1,9 +1,9 @@
 package marketplace.PharmaciaOrientadaAObjeto.controllers;
 
 import lombok.RequiredArgsConstructor;
+import marketplace.PharmaciaOrientadaAObjeto.Service.AdministradorService;
 import marketplace.PharmaciaOrientadaAObjeto.model.Infraestrutura.RetornoGeral;
 import marketplace.PharmaciaOrientadaAObjeto.model.Usuario.DTOs.AdminDTO;
-import marketplace.PharmaciaOrientadaAObjeto.service.AdministradorService;
 import marketplace.PharmaciaOrientadaAObjeto.model.Usuario.Administrador;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

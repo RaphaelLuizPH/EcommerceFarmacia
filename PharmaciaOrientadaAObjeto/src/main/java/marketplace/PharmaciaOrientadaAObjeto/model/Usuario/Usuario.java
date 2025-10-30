@@ -30,7 +30,6 @@ public abstract class Usuario {
     
     private String senha;
     
-    public abstract String getDescricao ();
     
     @Override
     public boolean equals (Object o) {
@@ -43,5 +42,10 @@ public abstract class Usuario {
     public int hashCode () {
         return Objects.hash(nome, dataNasc, email);
     }
+    
+    
+    public abstract String getDescricao ();
+    
+    
 }
 

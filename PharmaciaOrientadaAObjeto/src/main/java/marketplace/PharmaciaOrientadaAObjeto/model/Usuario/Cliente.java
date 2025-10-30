@@ -14,6 +14,7 @@ public class Cliente extends Usuario {
     @Id
     @EqualsAndHashCode.Include
     private String cpf;
+    
 
     @OneToOne(cascade = CascadeType.ALL)
 
