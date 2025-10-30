@@ -1,6 +1,7 @@
 package marketplace.PharmaciaOrientadaAObjeto.model.Usuario;
 
 
+import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,17 +18,21 @@ public abstract class Usuario {
     //@Id
     //private String cpf;
     @ToString.Include
+    @Column(nullable = false, unique = false)
     private String nome;
     
     @ToString.Include
+    @Column(nullable = false, unique = false)
     private LocalDate dataNasc;
     
     @ToString.Include
+    @Column(nullable = false, unique = true)
     private String telefone;
     
     @ToString.Include
+    @Column(nullable = false, unique = true)
     private String email;
-    
+    @Column(nullable = false, unique = false)
     private String senha;
     
     public abstract String getDescricao ();

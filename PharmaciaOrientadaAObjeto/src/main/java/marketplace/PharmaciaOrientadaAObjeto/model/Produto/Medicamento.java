@@ -1,10 +1,15 @@
 package marketplace.PharmaciaOrientadaAObjeto.model.Produto;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
+import marketplace.PharmaciaOrientadaAObjeto.model.Avaliacao;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -19,7 +24,10 @@ public class Medicamento extends Produto implements Serializable {
     public Medicamento () {
     
     }
-    
+    @OneToMany(cascade =  CascadeType.ALL)
+    private Set<Avaliacao> avaliacoes = new HashSet<>();
+
+
     public Medicamento (String nome, String descricao, int code) {
         this.setNomeproduto(nome);
         this.setDescricao_produto(descricao);

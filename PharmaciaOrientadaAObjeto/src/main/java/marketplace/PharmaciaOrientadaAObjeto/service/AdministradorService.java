@@ -44,7 +44,7 @@ public class AdministradorService {
             throw new IllegalStateException("Nenhuma fármacia com ID: " + admin.getCnpj());
         }
 
-        newAdministrador.setFarmacia(farmas.get());
+        newAdministrador.getFarmacias().add(farmas.get());
 
 
         return repositorio.save(newAdministrador);

@@ -16,7 +16,6 @@ public class Cliente extends Usuario {
     private String cpf;
 
     @OneToOne(cascade = CascadeType.ALL)
-
     @JoinColumn(name = "endereco_id", referencedColumnName = "id")
     private Endereco enderecoCliente;
 

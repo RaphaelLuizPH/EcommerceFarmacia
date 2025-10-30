@@ -7,24 +7,25 @@ import lombok.Getter;
 import lombok.Setter;
 import marketplace.PharmaciaOrientadaAObjeto.model.Farmacia.Farmacia;
 
+import java.util.Set;
+
 
 @Entity
-@Table(name = "Administrador")
+@Table(name = "administrador")
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 public class Administrador extends Usuario {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    private int AdministradorId;
-
-
     private String cpf;
-    
-    @ManyToOne
-    @JoinColumn(name = "cnpj_farmacia")
-    private Farmacia farmacia;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY)
+    @JoinTable(name = "administrador_farmacia",
+            joinColumns  = @JoinColumn(name = "administrador_id"),
+            inverseJoinColumns = @JoinColumn(name = "farmacia_id"))
+    private Set<Farmacia> farmacias;
     
     
     @Override
