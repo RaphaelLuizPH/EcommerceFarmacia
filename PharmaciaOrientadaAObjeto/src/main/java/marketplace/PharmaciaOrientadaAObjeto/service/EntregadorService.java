@@ -30,4 +30,14 @@ public class EntregadorService {
         return repositorio.findByCnh(cnh);
     }
 
+    public List<Entregador> findByAtivoTrue() { return repositorio.findByAtivoTrue();}
+
+    public List<Entregador> findByAtivoFalse() {return repositorio.findByAtivoFalse();}
+
+    public List<Entregador> findByNome(String nome) {
+        if (nome == null || nome.trim().isEmpty()) {
+            return List.of();
+        }
+        return repositorio.findByNome(nome.trim());
+    }
 }

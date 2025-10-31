@@ -15,8 +15,10 @@ import java.util.Objects;
 @Getter @Setter
 @ToString(onlyExplicitlyIncluded = true)
 public abstract class Usuario {
-    //@Id
-    //private String cpf;
+
+    @Column(unique = true, nullable = false, length = 11)
+    private String cpf;
+
     @ToString.Include
     @Column(nullable = false, unique = false)
     private String nome;

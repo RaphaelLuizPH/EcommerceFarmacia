@@ -1,4 +1,4 @@
-package marketplace.PharmaciaOrientadaAObjeto.model.Usuario.DTOs;
+package marketplace.PharmaciaOrientadaAObjeto.DTOs;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -2,7 +2,7 @@ package marketplace.PharmaciaOrientadaAObjeto.service;
 
 import lombok.RequiredArgsConstructor;
 import marketplace.PharmaciaOrientadaAObjeto.helpers.CadastroHelper;
-import marketplace.PharmaciaOrientadaAObjeto.model.Usuario.DTOs.AdminDTO;
+import marketplace.PharmaciaOrientadaAObjeto.DTOs.AdminDTO;
 import marketplace.PharmaciaOrientadaAObjeto.repository.AdministradorRepositorio;
 import marketplace.PharmaciaOrientadaAObjeto.model.Usuario.Administrador;
 import marketplace.PharmaciaOrientadaAObjeto.repository.FarmaciaRepositorio;
