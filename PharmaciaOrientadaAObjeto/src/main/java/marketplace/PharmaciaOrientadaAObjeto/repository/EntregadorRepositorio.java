@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface EntregadorRepositorio extends JpaRepository<Entregador, String> {
 
 
-    Optional<Entregador> findByCnh(String cnh);
+    Optional<Entregador> findByCNH(String cnh);
 
     List<Entregador> findByNome(String nome);
     List<Entregador> findByAtivoTrue();

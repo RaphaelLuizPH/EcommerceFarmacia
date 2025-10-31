@@ -1,15 +1,12 @@
 package marketplace.PharmaciaOrientadaAObjeto.controllers;
 
 import lombok.RequiredArgsConstructor;
+import marketplace.PharmaciaOrientadaAObjeto.DTOs.NewPedidoDTO;
 import marketplace.PharmaciaOrientadaAObjeto.DTOs.PedidoDTO;
 import marketplace.PharmaciaOrientadaAObjeto.service.PedidoService;
 import marketplace.PharmaciaOrientadaAObjeto.model.Pedido.Pedido;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,7 +15,7 @@ import java.util.List;
 @RequestMapping("/pedidos")
 class PedidoController {
 
-   @Autowired
+
    private final PedidoService service;
 
 
@@ -37,7 +34,21 @@ class PedidoController {
         return ResponseEntity.ok(pedidoDTO);
         
     }
-    
-    
+
+     @PostMapping()
+   public ResponseEntity<Pedido> create(@RequestBody NewPedidoDTO pedido) {
+
+    try {
+        var res = service.create(pedido);
+
+
+        return  ResponseEntity.ok(res);
+    } catch (Exception e) {
+        return ResponseEntity.badRequest().build();
+    }
+
+
+    }
+
     
 }

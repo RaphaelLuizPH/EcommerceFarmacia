@@ -12,10 +12,11 @@ import marketplace.PharmaciaOrientadaAObjeto.model.Endereco.Endereco;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 public class Cliente extends Usuario {
     @Id
-    @EqualsAndHashCode.Include
-    private String cpf;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "endereco_id", referencedColumnName = "id")
     private Endereco enderecoCliente;
 

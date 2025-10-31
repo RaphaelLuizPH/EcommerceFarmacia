@@ -28,7 +28,7 @@ public abstract class Usuario {
     private LocalDate dataNasc;
     
     @ToString.Include
-    @Column(nullable = false, unique = true)
+    @Column(nullable = true, unique = true)
     private String telefone;
     
     @ToString.Include

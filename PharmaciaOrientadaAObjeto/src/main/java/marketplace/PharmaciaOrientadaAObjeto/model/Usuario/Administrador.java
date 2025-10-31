@@ -17,8 +17,9 @@ import java.util.Set;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 public class Administrador extends Usuario {
     @Id
-    @EqualsAndHashCode.Include
-    private String cpf;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.LAZY)

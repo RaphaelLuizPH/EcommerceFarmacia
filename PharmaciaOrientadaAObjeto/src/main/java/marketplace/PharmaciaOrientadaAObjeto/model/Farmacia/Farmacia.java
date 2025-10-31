@@ -44,4 +44,7 @@ public class Farmacia {
     private Collection<Administrador> administradores;
 
 
+    public void setContatos(Set<String> contatos) {
+        this.contato = contatos;
+    }
 }

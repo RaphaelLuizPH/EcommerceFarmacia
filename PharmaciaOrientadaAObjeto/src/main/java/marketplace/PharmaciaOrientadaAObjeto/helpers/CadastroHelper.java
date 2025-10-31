@@ -60,7 +60,7 @@ public class CadastroHelper {
 
     public Optional<Entregador> EntregadorExiste(String cnh) {
 
-        return entregadorRepositorio.findByCnh(cnh);
+        return entregadorRepositorio.findByCNH(cnh);
 
     }
 

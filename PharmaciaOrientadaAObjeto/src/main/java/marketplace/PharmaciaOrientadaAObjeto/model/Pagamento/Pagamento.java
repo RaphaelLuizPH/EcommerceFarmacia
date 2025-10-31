@@ -12,13 +12,26 @@ import java.util.Collection;
 public class Pagamento {
 
     @Id
-    private PagamentoTipo  id_tipo;
+    @Column(unique = true, nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
-    private String tipo;
+
+    @Enumerated(EnumType.STRING)
+    private PagamentoTipo tipo;
+
 
     @OneToMany(mappedBy = "pagamento")
     private Collection<Transacao> transacao;
 
+
+    public Pagamento(PagamentoTipo id) {
+        this.tipo = id;
+    }
+
+    public Pagamento() {
+
+    }
 }
 
 

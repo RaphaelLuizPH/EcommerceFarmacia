@@ -5,12 +5,15 @@ import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import marketplace.PharmaciaOrientadaAObjeto.model.Produto.Produto;
 import marketplace.PharmaciaOrientadaAObjeto.model.Usuario.Cliente;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -61,7 +64,28 @@ public class Pedido implements Serializable {
             this.statusPedido = statusPedido.getCode();
         }
     }
-    
+
+    public void setItensPedido (List<Produto> produtos) {
+    for(Produto produto : produtos) {
+
+        if(itensPedido.stream().anyMatch(p -> p.getProduto().equals(produto))) {
+            continue;
+        }
+
+        var quantidade = (int) produtos.stream()
+                .filter(p -> p.getID_produto() == produto.getID_produto())
+                .count();
+
+        var preco = quantidade * produto.getPreco_produto();
+
+        var itemPedido = new ItemPedido(this, produto,quantidade,preco);
+
+        itemPedido.setProduto(produto);
+
+        itensPedido.add(itemPedido);
+    }
+    }
+
     public Set<ItemPedido> getItensPedido () {
         return itensPedido;
     }
