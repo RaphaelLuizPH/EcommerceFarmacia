@@ -1,10 +1,12 @@
 package marketplace.PharmaciaOrientadaAObjeto.model.Pedido;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import marketplace.PharmaciaOrientadaAObjeto.DTOs.ProdutoDTO;
 import marketplace.PharmaciaOrientadaAObjeto.model.Produto.Produto;
 import marketplace.PharmaciaOrientadaAObjeto.model.Usuario.Cliente;
 
@@ -37,10 +39,13 @@ public class Pedido implements Serializable {
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
-    
-    
+
+    @Transient
+    private ArrayList<ProdutoDTO> produtos = new ArrayList<>();
+
     
     @OneToMany(mappedBy = "id.pedido", cascade = CascadeType.ALL)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<ItemPedido> itensPedido = new HashSet<>();
     
     
@@ -68,7 +73,7 @@ public class Pedido implements Serializable {
     public void setItensPedido (List<Produto> produtos) {
     for(Produto produto : produtos) {
 
-        if(itensPedido.stream().anyMatch(p -> p.getProduto().equals(produto))) {
+        if(this.produtos.stream().anyMatch(p -> p.getID_produto() == produto.getID_produto())) {
             continue;
         }
 
@@ -76,13 +81,12 @@ public class Pedido implements Serializable {
                 .filter(p -> p.getID_produto() == produto.getID_produto())
                 .count();
 
-        var preco = quantidade * produto.getPreco_produto();
 
-        var itemPedido = new ItemPedido(this, produto,quantidade,preco);
+        var item = new ProdutoDTO(produto, quantidade);
 
-        itemPedido.setProduto(produto);
 
-        itensPedido.add(itemPedido);
+
+        this.produtos.add(item);
     }
     }
 
