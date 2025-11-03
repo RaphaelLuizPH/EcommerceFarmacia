@@ -1,9 +1,11 @@
 package marketplace.PharmaciaOrientadaAObjeto.controllers;
 
 import lombok.RequiredArgsConstructor;
-import marketplace.PharmaciaOrientadaAObjeto.Service.FarmaciaService;
+import marketplace.PharmaciaOrientadaAObjeto.model.Infraestrutura.RetornoGeral;
+import marketplace.PharmaciaOrientadaAObjeto.service.FarmaciaService;
 import marketplace.PharmaciaOrientadaAObjeto.model.Farmacia.Farmacia;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,16 +16,28 @@ class FarmaciaController {
    private final FarmaciaService farmaciaService;
 
 
-    @GetMapping("/todas")
-    public Iterable<Farmacia> getAll() {
+    @GetMapping("/")
+    public ResponseEntity<Iterable<Farmacia>> getAll() {
 
-        return farmaciaService.GetAll();
+        try {
+            return ResponseEntity.ok(farmaciaService.GetAll());
+        } catch (Exception e) {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+
 
     }
 
     @PostMapping()
-    public Farmacia add(@RequestBody Farmacia farmacia) {
-      return  farmaciaService.Add(farmacia);
+    public ResponseEntity<RetornoGeral<Farmacia>> add(@RequestBody Farmacia farmacia) {
+        try {
+            var retorno = farmaciaService.Add(farmacia);
+            return ResponseEntity.ok(new RetornoGeral<>(true, retorno, "Farmacia adicionada com sucesso."));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new RetornoGeral<>(false, null, "Falha ao adicionar Farmacia." + e.getMessage()));
+        }
     }
 
 

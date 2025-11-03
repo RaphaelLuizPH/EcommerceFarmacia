@@ -1,7 +1,7 @@
-package marketplace.PharmaciaOrientadaAObjeto.Service;
+package marketplace.PharmaciaOrientadaAObjeto.service;
 
 import lombok.RequiredArgsConstructor;
-import marketplace.PharmaciaOrientadaAObjeto.Repositorio.IFarmaciaRepositorio;
+import marketplace.PharmaciaOrientadaAObjeto.repository.FarmaciaRepositorio;
 import marketplace.PharmaciaOrientadaAObjeto.model.Farmacia.Farmacia;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ public class FarmaciaService {
 
 
 
-    private final IFarmaciaRepositorio repositorio;
+    private final FarmaciaRepositorio repositorio;
 
 
 

@@ -1,9 +1,9 @@
-package marketplace.PharmaciaOrientadaAObjeto.Service;
+package marketplace.PharmaciaOrientadaAObjeto.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import marketplace.PharmaciaOrientadaAObjeto.model.CEP.Endereço;
+import marketplace.PharmaciaOrientadaAObjeto.model.CEP.CEPinfo;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
@@ -20,7 +20,7 @@ public class CepService {
         this.httpclient = httpclient;
     }
     
-    public Endereço GetCEP (String cep) {
+    public CEPinfo GetCEP (String cep) {
         try {
             var request = HttpRequest
                     .newBuilder()
@@ -30,10 +30,10 @@ public class CepService {
             
             var response = httpclient.sendAsync(request, HttpResponse.BodyHandlers.ofString()).thenApply(HttpResponse::body).thenApply(body -> {ObjectMapper mapper = new ObjectMapper();
                         try {
-                            Endereço endereço;
-                            endereço = mapper.readValue(body, Endereço.class);
+                            CEPinfo CEPinfo;
+                            CEPinfo = mapper.readValue(body, CEPinfo.class);
                             
-                            return endereço;
+                            return CEPinfo;
                             
                             
                         }

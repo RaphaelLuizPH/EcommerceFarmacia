@@ -1,7 +1,7 @@
-package marketplace.PharmaciaOrientadaAObjeto.Service;
+package marketplace.PharmaciaOrientadaAObjeto.service;
 
 import lombok.RequiredArgsConstructor;
-import marketplace.PharmaciaOrientadaAObjeto.Repositorio.EntregadorRepositorio;
+import marketplace.PharmaciaOrientadaAObjeto.repository.EntregadorRepositorio;
 import marketplace.PharmaciaOrientadaAObjeto.model.Usuario.Entregador;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +27,17 @@ public class EntregadorService {
     }
 
     public Optional<Entregador> findByCNH(String cnh) {
-        return repositorio.findByCnh(cnh);
+        return repositorio.findByCNH(cnh);
     }
 
+    public List<Entregador> findByAtivoTrue() { return repositorio.findByAtivoTrue();}
+
+    public List<Entregador> findByAtivoFalse() {return repositorio.findByAtivoFalse();}
+
+    public List<Entregador> findByNome(String nome) {
+        if (nome == null || nome.trim().isEmpty()) {
+            return List.of();
+        }
+        return repositorio.findByNome(nome.trim());
+    }
 }

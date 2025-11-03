@@ -1,7 +1,7 @@
 package marketplace.PharmaciaOrientadaAObjeto.controllers;
 
 import lombok.RequiredArgsConstructor;
-import marketplace.PharmaciaOrientadaAObjeto.Service.CategoriaService;
+import marketplace.PharmaciaOrientadaAObjeto.service.CategoriaService;
 import marketplace.PharmaciaOrientadaAObjeto.model.Produto.Categoria;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
