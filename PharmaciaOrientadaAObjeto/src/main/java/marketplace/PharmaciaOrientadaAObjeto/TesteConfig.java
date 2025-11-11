@@ -31,11 +31,11 @@ public class TesteConfig implements CommandLineRunner {
     private final CategoriaRepositorio categoriaRepositorio;
     private final FarmaciaRepositorio farmaciaRepositorio;
     private final EntregadorRepositorio entregadorRepositorio;
-private final CadastroHelper  cadastroHelper;
+
 
     private final PedidoRepositorio pedidoRepositorio;
     private final ClienteRepositorio clienteRepositorio;
-
+    private final CadastroHelper cadastroHelper;
     private final ItemPedidoRepositorio itemPedidoRepositorio;
     private final PagamentoRepository pagamentoRepository;
 
@@ -169,7 +169,7 @@ private final CadastroHelper  cadastroHelper;
             cliente.setNome("Cliente Demonstração");
             cliente.setCpf("0987654321");
             cliente.setEmail("saverun@123.com");
-            cliente.setSenha("123456");
+            cliente.setSenha(  cadastroHelper.criptografar("123456"));
             cliente.setDataNasc(LocalDate.parse("1990-12-01"));
             cliente.setTelefone("61994154040");
             cliente.setEnderecoCliente(cadastroHelper.buscarEndereco("71966700", "1"));
