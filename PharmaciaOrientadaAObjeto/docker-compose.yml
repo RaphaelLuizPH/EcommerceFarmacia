@@ -38,7 +38,6 @@ services:
       ports:
         - "5173:80"
 
-
   mysql:
     image: mysql:8.0
     container_name: mysql
