@@ -4,10 +4,12 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import marketplace.PharmaciaOrientadaAObjeto.model.Transacao.Transacao;
 
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -65,5 +67,16 @@ public  class Produto implements Serializable {
     @Override
     public int hashCode () {
         return Objects.hashCode(ID_produto);
+    }
+
+    @ManyToMany(mappedBy = "produtos")
+    private Collection<Transacao> transacoes;
+
+    public Collection<Transacao> getTransacoes() {
+        return transacoes;
+    }
+
+    public void setTransacoes(Collection<Transacao> transacoes) {
+        this.transacoes = transacoes;
     }
 }

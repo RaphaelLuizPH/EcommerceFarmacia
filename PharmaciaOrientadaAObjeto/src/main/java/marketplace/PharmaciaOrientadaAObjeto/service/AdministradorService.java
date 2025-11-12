@@ -4,7 +4,7 @@ package marketplace.PharmaciaOrientadaAObjeto.Service;
 
 import lombok.RequiredArgsConstructor;
 import marketplace.PharmaciaOrientadaAObjeto.helpers.CadastroHelper;
-import marketplace.PharmaciaOrientadaAObjeto.model.Usuario.DTOs.AdminDTO;
+import marketplace.PharmaciaOrientadaAObjeto.DTOs.AdminDTO;
 import marketplace.PharmaciaOrientadaAObjeto.repository.AdministradorRepositorio;
 
 import marketplace.PharmaciaOrientadaAObjeto.model.Usuario.Administrador;
@@ -46,10 +46,12 @@ public class AdministradorService {
         if (farmas.isEmpty()) {
             throw new IllegalStateException("Nenhuma fármacia com ID: " + admin.getCnpj());
         }
+
         
         newAdministrador.setFarmacia(farmas.get());
         
-        
+
+
         return repositorio.save(newAdministrador);
         
     }

@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import marketplace.PharmaciaOrientadaAObjeto.model.Usuario.Cliente;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class ClienteService {
         return repositorio.findAll();
     }
 
+    @Transactional
     public Cliente Add(Cliente cliente) {
 
         if(repositorio.findByCpf(cliente.getCpf()) != null) {
@@ -49,7 +51,7 @@ public class ClienteService {
     }
 
     public void Delete(String clienteId) {
-        repositorio.deleteById(clienteId);
+        repositorio.deleteClienteByCpf(clienteId);
     }
 
 

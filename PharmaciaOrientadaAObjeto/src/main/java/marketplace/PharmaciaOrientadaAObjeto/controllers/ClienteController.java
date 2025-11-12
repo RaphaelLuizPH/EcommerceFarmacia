@@ -29,7 +29,7 @@ class ClienteController {
             return ResponseEntity.ok(new RetornoGeral<>(true, retorno, "Salvo com sucesso" ));
 
         } catch (Exception exception) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
 

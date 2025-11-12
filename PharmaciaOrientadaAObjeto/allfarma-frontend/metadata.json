@@ -1,0 +1,5 @@
+{
+  "name": "AllPharma",
+  "description": "A modern login screen for a pharmacy marketplace application, featuring profile-based access for clients, delivery personnel, and super users.",
+  "requestFramePermissions": []
+}

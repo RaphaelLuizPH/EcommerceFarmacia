@@ -8,8 +8,11 @@ import lombok.Setter;
 import marketplace.PharmaciaOrientadaAObjeto.model.Farmacia.Farmacia;
 import marketplace.PharmaciaOrientadaAObjeto.model.Usuario.Usuario;
 
+import java.util.Set;
+
+
 @Entity
-@Table(name = "Administrador")
+@Table(name = "administrador")
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)

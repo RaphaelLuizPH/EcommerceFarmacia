@@ -6,11 +6,16 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import marketplace.PharmaciaOrientadaAObjeto.model.Usuario.Administrador;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.Type;
 
 import java.sql.Time;
 import java.time.LocalTime;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import static com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY;
@@ -28,10 +33,18 @@ public class Farmacia {
     @ElementCollection
     @CollectionTable(name = "farmacia_contatos", joinColumns = @JoinColumn(name = "cnpj"))
     @Column(name = "contato_value")
-    private List<String> contato;
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Set<String> contato;
     @Schema(type = "string", example = "08:00:00")
     private Time horarioAbertura;
     @Schema(type = "string", example = "08:00:00")
     private Time horarioFechamento;
 
+    @ManyToMany(mappedBy = "farmacias")
+    private Collection<Administrador> administradores;
+
+
+    public void setContatos(Set<String> contatos) {
+        this.contato = contatos;
+    }
 }
