@@ -14,8 +14,8 @@ import org.hibernate.annotations.OnDeleteAction;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = false)
 public class Cliente extends Usuario {
     @Id
-    @EqualsAndHashCode.Include
-    private String cpf;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     
 
 

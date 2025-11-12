@@ -3,7 +3,6 @@ package marketplace.PharmaciaOrientadaAObjeto.controllers;
 import lombok.RequiredArgsConstructor;
 import marketplace.PharmaciaOrientadaAObjeto.Service.EntregadorService;
 import marketplace.PharmaciaOrientadaAObjeto.DTOs.EntregadorDTO;
-import marketplace.PharmaciaOrientadaAObjeto.service.EntregadorService;
 import marketplace.PharmaciaOrientadaAObjeto.model.Usuario.Entregador;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

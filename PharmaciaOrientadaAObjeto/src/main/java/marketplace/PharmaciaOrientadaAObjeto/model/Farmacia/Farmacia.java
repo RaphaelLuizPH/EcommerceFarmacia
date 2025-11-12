@@ -40,7 +40,7 @@ public class Farmacia {
     @Schema(type = "string", example = "08:00:00")
     private Time horarioFechamento;
 
-    @ManyToMany(mappedBy = "farmacias")
+    @OneToMany(mappedBy = "farmacia")
     private Collection<Administrador> administradores;
 
 
