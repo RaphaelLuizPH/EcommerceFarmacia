@@ -47,7 +47,8 @@ public class Farmacia {
     @OneToMany(mappedBy = "farmacia", fetch = FetchType.LAZY,  cascade = CascadeType.ALL)
     private Collection<Administrador> administradores;
 
-    @ManyToMany
+    @JsonProperty(access = READ_ONLY)
+    @ManyToMany(mappedBy = "farmaciasEstoque")
     private Set<Produto> estoque;
 
 }
