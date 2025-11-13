@@ -44,13 +44,13 @@ services:
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: root_pass
-      MYSQL_DATABASE: pharmacia
+      MYSQL_DATABASE: farmacia_oo
       MYSQL_USER: pharmacia
       MYSQL_PASSWORD: pharmacia_pass
     volumes:
       - mysql_data:/var/lib/mysql
     ports:
-      - "3306:3306"
+      - "3307:3306"
     healthcheck:
 
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot_pass"]
