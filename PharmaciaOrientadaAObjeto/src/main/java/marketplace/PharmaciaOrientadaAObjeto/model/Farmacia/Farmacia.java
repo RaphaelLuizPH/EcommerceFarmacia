@@ -48,7 +48,7 @@ public class Farmacia {
     private Collection<Administrador> administradores;
 
     @JsonProperty(access = READ_ONLY)
-    @ManyToMany(mappedBy = "farmaciasEstoque")
+    @ManyToMany
     private Set<Produto> estoque;
 
 }

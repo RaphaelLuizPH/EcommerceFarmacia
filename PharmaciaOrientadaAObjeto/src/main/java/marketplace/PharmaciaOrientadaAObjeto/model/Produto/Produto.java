@@ -70,7 +70,7 @@ public  class Produto implements Serializable {
     private Collection<Transacao> transacoes;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "estoque")
-    private Set<Farmacia> farmaciasEstoque;
+    private Set<Farmacia> farmaciaEstoque;
 
 
 }
