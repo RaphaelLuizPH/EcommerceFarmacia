@@ -30,21 +30,22 @@ public class Farmacia {
     private String cnpj;
     private String nome;
     private String razaoSocial;
+
     @ElementCollection
     @CollectionTable(name = "farmacia_contatos", joinColumns = @JoinColumn(name = "cnpj"))
     @Column(name = "contato_value")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<String> contato;
+
     @Schema(type = "string", example = "08:00:00")
     private Time horarioAbertura;
     @Schema(type = "string", example = "08:00:00")
     private Time horarioFechamento;
 
-    @OneToMany(mappedBy = "farmacia")
+    @JsonProperty(access = READ_ONLY)
+    @OneToMany(mappedBy = "farmacia", fetch = FetchType.LAZY,  cascade = CascadeType.ALL)
     private Collection<Administrador> administradores;
 
 
-    public void setContatos(Set<String> contatos) {
-        this.contato = contatos;
-    }
+
 }

@@ -24,11 +24,13 @@ public class AdministradorService {
     private final CadastroHelper cadastroHelper;
 
 
-    public List<Administrador> GetAll() {
-        return repositorio.findAll();
+    public List<AdminDTO> GetAll() {
+        var adms = repositorio.findAll();
+
+       return adms.stream().map(AdminDTO::new).toList();
     }
 
-    public Administrador Add(AdminDTO admin) {
+    public AdminDTO Add(AdminDTO admin) {
         
         var newAdministrador = new Administrador();
         
@@ -52,7 +54,7 @@ public class AdministradorService {
         
 
 
-        return repositorio.save(newAdministrador);
+        return new AdminDTO(repositorio.save(newAdministrador)) ;
         
     }
 

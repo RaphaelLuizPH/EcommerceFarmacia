@@ -1,6 +1,7 @@
 package marketplace.PharmaciaOrientadaAObjeto.controllers;
 
 import lombok.RequiredArgsConstructor;
+import marketplace.PharmaciaOrientadaAObjeto.DTOs.FarmaciaDTO;
 import marketplace.PharmaciaOrientadaAObjeto.model.Infraestrutura.RetornoGeral;
 import marketplace.PharmaciaOrientadaAObjeto.service.FarmaciaService;
 import marketplace.PharmaciaOrientadaAObjeto.model.Farmacia.Farmacia;
@@ -17,7 +18,7 @@ class FarmaciaController {
 
 
     @GetMapping("/")
-    public ResponseEntity<Iterable<Farmacia>> getAll() {
+    public ResponseEntity<Iterable<FarmaciaDTO>> getAll() {
 
         try {
             return ResponseEntity.ok(farmaciaService.GetAll());

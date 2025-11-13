@@ -228,7 +228,7 @@ public class TesteConfig implements CommandLineRunner {
         Set<String> contatos1 = new HashSet<>();
         contatos1.add("farmacia.viva@email.com");
         contatos1.add("(11) 3333-4444");
-        farmacia1.setContatos(contatos1);
+        farmacia1.setContato(contatos1);
 
 
         farmacia1.setHorarioAbertura(Time.valueOf(LocalTime.of(8, 0, 0))); // 08:00:00
@@ -245,7 +245,7 @@ public class TesteConfig implements CommandLineRunner {
 
         Set<String> contatos2 = new HashSet<>();
         contatos2.add("(21) 98765-4321"); // Apenas um contato
-        farmacia2.setContatos(contatos2);
+        farmacia2.setContato(contatos2);
 
 
         farmacia2.setHorarioAbertura(Time.valueOf("00:00:00"));
@@ -260,7 +260,7 @@ public class TesteConfig implements CommandLineRunner {
         farmacia3.setRazaoSocial("Farmácia Popular da Silva ME");
 
 
-        farmacia3.setContatos(Set.of("atendimento@popular.com.br", "(31) 5555-6666", "(31) 7777-8888"));
+        farmacia3.setContato(Set.of("atendimento@popular.com.br", "(31) 5555-6666", "(31) 7777-8888"));
 
 
         farmacia3.setHorarioAbertura(Time.valueOf(LocalTime.of(9, 30, 0))); // 09:30:00

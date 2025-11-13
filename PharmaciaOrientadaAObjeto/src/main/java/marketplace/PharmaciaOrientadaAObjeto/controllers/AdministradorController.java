@@ -18,12 +18,12 @@ class AdministradorController {
 
 
     @GetMapping("/Administradores")
-    public ResponseEntity<Iterable<Administrador>> getAll() {
+    public ResponseEntity<Iterable<AdminDTO>> getAll() {
         return ResponseEntity.ok(administradorService.GetAll());
     }
 
     @PostMapping()
-    public ResponseEntity<RetornoGeral<Administrador>> add(@RequestBody AdminDTO admin) {
+    public ResponseEntity<RetornoGeral<AdminDTO>> add(@RequestBody AdminDTO admin) {
         try {
             var retorno = administradorService.Add(admin);
             return ResponseEntity.ok(new RetornoGeral<>(true, retorno, "Administrador cadastrado com sucesso."));
