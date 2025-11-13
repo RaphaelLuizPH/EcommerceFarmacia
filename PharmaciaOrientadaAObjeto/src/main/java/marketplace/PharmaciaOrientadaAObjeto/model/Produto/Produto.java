@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import marketplace.PharmaciaOrientadaAObjeto.model.Farmacia.Farmacia;
 import marketplace.PharmaciaOrientadaAObjeto.model.Transacao.Transacao;
 
 
@@ -51,12 +52,8 @@ public  class Produto implements Serializable {
         this.preco_produto = preco_produto;
         this.estoque_produto = estoque_produto;
     }*/
-    
-    public Set<Categoria> getCategorias () {
-        return categorias;
-    }
-    
-    
+
+
     @Override
     public boolean equals (Object o) {
         if (o == null || getClass() != o.getClass()) return false;
@@ -72,11 +69,8 @@ public  class Produto implements Serializable {
     @ManyToMany(mappedBy = "produtos")
     private Collection<Transacao> transacoes;
 
-    public Collection<Transacao> getTransacoes() {
-        return transacoes;
-    }
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "estoque")
+    private Set<Farmacia> farmaciasEstoque;
 
-    public void setTransacoes(Collection<Transacao> transacoes) {
-        this.transacoes = transacoes;
-    }
+
 }

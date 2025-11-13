@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import marketplace.PharmaciaOrientadaAObjeto.model.Produto.Produto;
 import marketplace.PharmaciaOrientadaAObjeto.model.Usuario.Administrador;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -46,6 +47,7 @@ public class Farmacia {
     @OneToMany(mappedBy = "farmacia", fetch = FetchType.LAZY,  cascade = CascadeType.ALL)
     private Collection<Administrador> administradores;
 
-
+    @ManyToMany
+    private Set<Produto> estoque;
 
 }
