@@ -86,71 +86,7 @@ const OrderHistoryScreen: React.FC<OrderHistoryScreenProps> = ({ onBuyAgain }) =
               </div>
             </header>
 
-            <main className="max-w-md mx-auto bg-gray-50 p-4">
-                {mockOrders.length > 0 ? (
-                    <div className="space-y-4">
-                        {mockOrders.map((order) => {
-                            const isExpanded = expandedOrderId === order.id;
-                            return (
-                                <div key={order.id} className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-                                    <button 
-                                        onClick={() => toggleOrderDetails(order.id)}
-                                        className="w-full text-left p-4 hover:bg-gray-50 transition-colors"
-                                    >
-                                        <div className="flex justify-between items-center">
-                                            <div>
-                                                <p className="font-bold text-slate-800">Pedido #{order.id}</p>
-                                                <p className="text-sm text-slate-500">{order.date}</p>
-                                            </div>
-                                            <div className="flex items-center gap-4">
-                                                <StatusBadge status={order.status} />
-                                                {isExpanded ? <ChevronUpIcon className="w-5 h-5 text-gray-400" /> : <ChevronDownIcon className="w-5 h-5 text-gray-400" />}
-                                            </div>
-                                        </div>
-                                        <div className="mt-2 flex justify-between items-center">
-                                            <p className="text-sm text-slate-500">Total</p>
-                                            <p className="font-bold text-slate-800">{order.total}</p>
-                                        </div>
-                                    </button>
-                                    
-                                    {isExpanded && (
-                                        <div className="border-t border-gray-200 p-4 animate-fade-in-down">
-                                            <h4 className="font-semibold text-slate-700 mb-3">Itens do pedido</h4>
-                                            <ul className="space-y-3">
-                                                {order.items.map(item => (
-                                                    <li key={item.id} className="flex items-center gap-4">
-                                                        <img src={item.image} alt={item.name} className="w-14 h-14 object-contain rounded-md bg-slate-100" />
-                                                        <div className="flex-grow">
-                                                            <p className="text-sm font-medium text-slate-800">{item.name}</p>
-                                                            <p className="text-xs text-slate-500">Qtd: {item.quantity}</p>
-                                                        </div>
-                                                        <p className="text-sm font-semibold text-slate-700">{item.price}</p>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                            {order.status === 'Entregue' && (
-                                              <button
-                                                  onClick={() => onBuyAgain(order.items)}
-                                                  className="w-full mt-4 py-2.5 text-sm font-semibold rounded-md text-white transition-opacity hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2"
-                                                  style={{ backgroundColor: '#C60650' }}
-                                              >
-                                                  Comprar novamente
-                                              </button>
-                                            )}
-                                        </div>
-                                    )}
-                                </div>
-                            );
-                        })}
-                    </div>
-                ) : (
-                    <div className="text-center py-16 px-4">
-                        <ClipboardDocumentListIcon className="w-16 h-16 text-slate-300 mx-auto mb-4" />
-                        <h3 className="text-lg font-semibold text-slate-700">Nenhum pedido encontrado</h3>
-                        <p className="text-sm text-slate-500 mt-1">Você ainda não fez nenhum pedido.</p>
-                    </div>
-                )}
-            </main>
+           
         </div>
     );
 };

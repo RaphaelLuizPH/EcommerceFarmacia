@@ -3,7 +3,7 @@ import BottomNav from "./BottomNav";
 import HomeScreen from "./HomeScreen";
 import ProfileScreen from "./ProfileScreen";
 import PlaceholderScreen from "./PlaceholderScreen";
-import OrderHistoryScreen, { OrderItem } from "./OrderHistoryScreen";
+import HistoricoDePedidos from "./HistoricoDePedidos";
 import UserDataScreen from "./UserDataScreen";
 import { CartItem, Product } from "../types";
 import ToastNotification from "./ToastNotification";
@@ -84,7 +84,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({
     }
   };
 
-  const handleBuyAgain = (items: OrderItem[]) => {
+  const handleBuyAgain = (items) => {
     setCart((prevCart) => {
       const newCart = [...prevCart];
       items.forEach((orderItem) => {
@@ -128,7 +128,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({
       case "pharmacies":
         return <PlaceholderScreen title="Farmácias" />;
       case "orders":
-        return <OrderHistoryScreen onBuyAgain={handleBuyAgain} />;
+        return <HistoricoDePedidos onBuyAgain={handleBuyAgain} />;
       case "profile":
         if (profileView === "userData") {
           return <UserDataScreen onBack={() => setProfileView("main")} />;

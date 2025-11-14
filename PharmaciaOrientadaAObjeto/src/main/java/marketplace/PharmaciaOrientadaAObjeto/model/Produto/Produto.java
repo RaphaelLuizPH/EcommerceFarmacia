@@ -1,6 +1,7 @@
 package marketplace.PharmaciaOrientadaAObjeto.model.Produto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -68,6 +69,7 @@ public  class Produto implements Serializable {
     }
 
     @ManyToMany(mappedBy = "produtos")
+    @JsonIgnore
     private Collection<Transacao> transacoes;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "estoque")
