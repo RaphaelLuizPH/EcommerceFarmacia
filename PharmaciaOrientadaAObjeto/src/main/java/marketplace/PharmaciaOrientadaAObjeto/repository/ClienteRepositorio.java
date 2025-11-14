@@ -7,5 +7,7 @@ public interface ClienteRepositorio extends JpaRepository<Cliente, Long> {
 
     Cliente findByCpf(String cpf);
 
+    Cliente findByNome(String nome);
+
     Cliente deleteClienteByCpf(String cpf);
 }
