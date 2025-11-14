@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import marketplace.PharmaciaOrientadaAObjeto.model.Farmacia.Farmacia;
+import marketplace.PharmaciaOrientadaAObjeto.model.Produto.Produto;
 import marketplace.PharmaciaOrientadaAObjeto.model.Usuario.Administrador;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -29,7 +30,7 @@ public class FarmaciaDTO {
 
     private Time horarioFechamento;
 
-
+    private Set<Produto> estoque;
 
     private Collection<AdminDTO> administradores;
 
@@ -43,7 +44,7 @@ public class FarmaciaDTO {
         this.horarioAbertura = farmacia.getHorarioAbertura();
         this.horarioFechamento = farmacia.getHorarioFechamento();
         this.administradores = farmacia.getAdministradores().stream().map(AdminDTO::new).toList();
-
+        this.estoque = farmacia.getEstoque();
     }
 
 }
