@@ -90,7 +90,7 @@ export default function HistoricoScreen() {
                           Dados do cliente
                         </h2>
 
-                        <p className=" text-slate-800">
+                        <p className="text-sm text-slate-500">
                           Nome: {order.cliente.nome}
                         </p>
                         <p className="text-sm text-slate-500">
