@@ -11,7 +11,7 @@ services:
       mysql:
         condition: service_healthy
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/pharmacia?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/farmacia_oo?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: pharmacia
       SPRING_DATASOURCE_PASSWORD: pharmacia_pass
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
