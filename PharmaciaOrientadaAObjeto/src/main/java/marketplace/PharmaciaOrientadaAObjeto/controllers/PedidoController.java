@@ -3,6 +3,7 @@ package marketplace.PharmaciaOrientadaAObjeto.controllers;
 import lombok.RequiredArgsConstructor;
 import marketplace.PharmaciaOrientadaAObjeto.DTOs.NewPedidoDTO;
 import marketplace.PharmaciaOrientadaAObjeto.DTOs.PedidoDTO;
+import marketplace.PharmaciaOrientadaAObjeto.model.Infraestrutura.RetornoGeral;
 import marketplace.PharmaciaOrientadaAObjeto.service.PedidoService;
 import marketplace.PharmaciaOrientadaAObjeto.model.Pedido.Pedido;
 import org.springframework.http.ResponseEntity;
@@ -44,7 +45,8 @@ class PedidoController {
 
         return  ResponseEntity.ok(res);
     } catch (Exception e) {
-        return ResponseEntity.badRequest().build();
+
+        return ResponseEntity.badRequest().body(null);
     }
 
 

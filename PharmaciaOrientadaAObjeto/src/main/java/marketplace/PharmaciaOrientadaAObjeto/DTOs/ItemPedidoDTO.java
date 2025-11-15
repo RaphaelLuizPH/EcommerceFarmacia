@@ -13,13 +13,13 @@ public class ItemPedidoDTO {
     private String nome;
     private Integer quantidade;
     private Double preco;
-    
+    private Double precoTotal;
     public ItemPedidoDTO(ItemPedido itemPedido) {
         Produto produto = itemPedido.getProduto();
         this.id = produto.getID_produto();
         this.nome = produto.getNomeproduto();
-        this.quantidade = produto.getEstoque_produto();
-        this.preco = produto.getPreco_produto();
-        
+        this.quantidade = itemPedido.getQuantidade();
+        this.preco = itemPedido.getPreco();
+        this.precoTotal = quantidade * preco;
     }
 }

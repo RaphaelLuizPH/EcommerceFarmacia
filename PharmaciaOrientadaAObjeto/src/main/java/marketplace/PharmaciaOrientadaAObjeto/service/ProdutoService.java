@@ -1,6 +1,7 @@
 package marketplace.PharmaciaOrientadaAObjeto.service;
 
 import lombok.RequiredArgsConstructor;
+import marketplace.PharmaciaOrientadaAObjeto.DTOs.ProdutoDTO;
 import marketplace.PharmaciaOrientadaAObjeto.repository.ProdutoRepositorio;
 import marketplace.PharmaciaOrientadaAObjeto.model.Produto.Produto;
 import org.springframework.stereotype.Service;
@@ -16,8 +17,8 @@ public class ProdutoService {
     private final ProdutoRepositorio repositorio;
 
     
-    public List<Produto> getAll() {
-        return repositorio.findAll();
+    public List<ProdutoDTO> getAll() {
+        return repositorio.findAll().stream().map((p) -> new ProdutoDTO(p)).toList();
     }
 
     public Produto getById(int id) {

@@ -19,7 +19,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({
 }) => {
   const [activeTab, setActiveTab] = useState("home");
   const [profileView, setProfileView] = useState("main");
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const [cart, setCart] = useState([]);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   useEffect(() => {
@@ -50,34 +50,42 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({
     setToastMessage(message);
   };
 
-  const handleAddToCart = (product: Product, quantity: number = 1) => {
+  const handleAddToCart = (product, quantity: number = 1) => {
     setCart((prevCart) => {
       const existingItem = prevCart.find(
-        (item) => item.id_produto === product.id_produto
+        (item) => item.product.id_produto === product.id_produto
       );
       if (existingItem) {
         return prevCart.map((item) =>
-          item.productId === product.id_produto
+          item.product.id_produto === product.id_produto
             ? { ...item, quantity: item.quantity + quantity }
             : item
         );
       } else {
-        return [...prevCart, { productId: product.id_produto, quantity }];
+        return [
+          ...prevCart,
+          { product, quantity, total: product.preco_produto * quantity },
+        ];
       }
     });
-    showToast(`${product.name} adicionado ao carrinho!`);
+    console.log("Produto adicionado ao carrinho:", product);
+    showToast(`${product.nomeproduto} adicionado ao carrinho!`);
   };
 
   const handleUpdateQuantity = (productId: number, newQuantity: number) => {
     if (newQuantity <= 0) {
       setCart((prevCart) =>
-        prevCart.filter((item) => item.productId !== productId)
+        prevCart.filter((item) => item.product.id_produto !== productId)
       );
     } else {
       setCart((prevCart) =>
         prevCart.map((item) =>
-          item.productId === productId
-            ? { ...item, quantity: newQuantity }
+          item.product.id_produto === productId
+            ? {
+                ...item,
+                quantity: newQuantity,
+                total: item.product.preco_produto * newQuantity,
+              }
             : item
         )
       );
@@ -123,6 +131,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({
             allProducts={products}
             handleAddToCart={handleAddToCart}
             handleUpdateQuantity={handleUpdateQuantity}
+            showToast={showToast}
           />
         );
       case "pharmacies":

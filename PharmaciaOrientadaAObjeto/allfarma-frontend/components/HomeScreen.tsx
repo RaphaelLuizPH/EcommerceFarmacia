@@ -35,6 +35,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
   allProducts,
   handleAddToCart,
   handleUpdateQuantity,
+  showToast,
 }) => {
   const [selectedCategory, setSelectedCategory] = useState(categories[0].id);
   const [searchQuery, setSearchQuery] = useState(
@@ -46,6 +47,31 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   const [products, setProducts] = useState<any[]>([]);
+
+  const handleBuy = () => {
+    console.log("Finalizando compra com os itens do carrinho:", cart);
+    const productIds = [];
+    cart.forEach((item) => {
+      for (let i = 0; i < item.quantity; i++) {
+        productIds.push(item.product.id_produto);
+      }
+    });
+
+    api
+      .post("/pedidos", {
+        clienteId: 1,
+        farmaciaId: "11.111.111/0001-01",
+        produtos: [...productIds],
+        pagamento: 1,
+      })
+      .then((response) => {
+        console.log("Compra realizada com sucesso:", response.data);
+        showToast("Compra realizada com sucesso!");
+      })
+      .catch((error) => {
+        console.error("Erro ao realizar compra:", error);
+      });
+  };
 
   useEffect(() => {
     api
@@ -111,6 +137,15 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
   const cartTotalItems = useMemo(() => {
     return cart.reduce((total, item) => total + item.quantity, 0);
   }, [cart]);
+
+  const formatMoney = (value: string | number) => {
+    if (typeof value === "number") {
+      value = value.toString();
+    }
+
+    const number = parseFloat(value).toFixed(2);
+    return "R$" + number;
+  };
 
   const cartTotalPrice = useMemo(() => {
     return cart
@@ -417,31 +452,38 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
               <div className="p-4 flex-grow overflow-y-auto">
                 <ul className="divide-y divide-slate-200">
                   {cart.map((item) => {
-                    const product = allProducts.find(
-                      (p) => p.id === item.productId
-                    );
+                    const { product, quantity, total } = item;
+
+                    console.log("Renderizando item do carrinho:", item);
                     if (!product) return null;
                     return (
-                      <li key={item.productId} className="py-4 flex gap-4">
+                      <li key={product.id_produto} className="py-4 flex gap-4">
                         <img
                           src={product.image}
-                          alt={product.name}
+                          alt={product.nomeproduto}
                           className="w-20 h-20 object-contain rounded-md bg-slate-50"
                         />
                         <div className="flex-grow flex flex-col">
                           <h3 className="text-sm font-semibold text-slate-800">
-                            {product.name}
+                            {product.nomeproduto}
                           </h3>
-                          <p className="text-sm text-slate-500 mt-1">
-                            {product.price}
+                          <p
+                            className="text-sm text-slate-500"
+                            style={{ color: primaryColor }}
+                          >
+                            {formatMoney(product.preco_produto)} Un.
                           </p>
+                          <p className="text-sm text-slate-500 mt-1 mb-1">
+                            {formatMoney(total)}
+                          </p>
+
                           <div className="flex items-center justify-between mt-auto">
                             <div className="flex items-center border border-slate-300 rounded-md">
                               <button
                                 onClick={() =>
                                   handleUpdateQuantity(
-                                    item.productId,
-                                    item.quantity - 1
+                                    product.id_produto,
+                                    quantity - 1
                                   )
                                 }
                                 className="p-1.5 text-slate-500 hover:text-slate-800"
@@ -449,13 +491,13 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
                                 <MinusIcon className="w-4 h-4" />
                               </button>
                               <span className="px-3 text-sm font-medium">
-                                {item.quantity}
+                                {quantity}
                               </span>
                               <button
                                 onClick={() =>
                                   handleUpdateQuantity(
-                                    item.productId,
-                                    item.quantity + 1
+                                    product.id_produto,
+                                    quantity + 1
                                   )
                                 }
                                 className="p-1.5 text-slate-500 hover:text-slate-800"
@@ -465,7 +507,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
                             </div>
                             <button
                               onClick={() =>
-                                handleUpdateQuantity(item.productId, 0)
+                                handleUpdateQuantity(product.id_produto, 0)
                               }
                               className="text-slate-400 hover:text-red-500 p-1"
                             >
@@ -486,6 +528,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
                   </span>
                 </div>
                 <button
+                  onClick={handleBuy}
                   className="w-full py-3 text-sm font-bold rounded-md text-white transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2"
                   style={{ backgroundColor: primaryColor }}
                 >

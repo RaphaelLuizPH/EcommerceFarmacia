@@ -82,7 +82,7 @@ public class Pedido implements Serializable {
                 .count();
 
 
-        var item = new ProdutoDTO(produto, quantidade);
+        var item = new ProdutoDTO(produto);
 
 
 
@@ -90,7 +90,4 @@ public class Pedido implements Serializable {
     }
     }
 
-    public Set<ItemPedido> getItensPedido () {
-        return itensPedido;
-    }
 }

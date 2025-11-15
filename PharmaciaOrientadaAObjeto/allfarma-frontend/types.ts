@@ -7,7 +7,7 @@ export enum ProfileType {
 
 export interface Product {
   id_produto: number;
-  name: string;
+  nome: string;
   price: string;
   image: string;
   category: 'bem-estar' | 'perfumaria' | 'medicamentos';

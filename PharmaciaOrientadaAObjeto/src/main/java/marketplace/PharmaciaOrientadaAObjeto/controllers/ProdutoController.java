@@ -2,6 +2,7 @@ package marketplace.PharmaciaOrientadaAObjeto.controllers;
 
 import lombok.RequiredArgsConstructor;
 
+import marketplace.PharmaciaOrientadaAObjeto.DTOs.ProdutoDTO;
 import marketplace.PharmaciaOrientadaAObjeto.service.ProdutoService;
 import marketplace.PharmaciaOrientadaAObjeto.model.Produto.Produto;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +19,8 @@ class ProdutoController {
 
 
     @GetMapping()
-    public ResponseEntity<List<Produto>> getAll() {
-        List<Produto> lista = produtoService.getAll();
+    public ResponseEntity<List<ProdutoDTO>> getAll() {
+        List<ProdutoDTO> lista = produtoService.getAll();
 
         return ResponseEntity.ok().body(lista);
     }

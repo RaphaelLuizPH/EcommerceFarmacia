@@ -69,7 +69,7 @@ public  class Produto implements Serializable {
     }
 
     @ManyToMany(mappedBy = "produtos")
-    @JsonIgnore
+
     private Collection<Transacao> transacoes;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "estoque")
