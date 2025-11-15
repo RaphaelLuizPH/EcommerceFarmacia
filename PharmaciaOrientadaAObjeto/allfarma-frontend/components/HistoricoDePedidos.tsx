@@ -3,7 +3,7 @@ import ChevronDownIcon from "./icons/ChevronDownIcon";
 import ChevronUpIcon from "./icons/ChevronUpIcon";
 import ClipboardDocumentListIcon from "./icons/ClipboardDocumentListIcon";
 import api from "@/axios/axios";
-
+import { formatMoney } from "./formatMoney";
 const StatusBadge: React.FC<{ status: string }> = ({ status }) => {
   const statusStyles: Record<string, string> = {
     ENTREGUE: "bg-green-100 text-green-800",
@@ -125,13 +125,13 @@ export default function HistoricoScreen() {
                                   </p>
                                 </div>
                                 <p className="text-sm font-semibold text-slate-700">
-                                  R${item.preco * item.quantidade}
+                                  {formatMoney(item.preco * item.quantidade)}
                                   <span
                                     className="text-info text-info"
                                     style={{ fontSize: 10 }}
                                   >
                                     <br />
-                                    Un. R${item.preco}
+                                    Un. {formatMoney(item.preco)}
                                   </span>
                                 </p>
                               </li>

@@ -11,7 +11,7 @@ import MinusIcon from "./icons/MinusIcon";
 import TrashIcon from "./icons/TrashIcon";
 import api from "@/axios/axios";
 import ProductCard from "./ProductCard";
-
+import { formatMoney } from "./formatMoney";
 interface HomeScreenProps {
   onLogout: () => void;
   cart: CartItem[];
@@ -36,6 +36,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
   handleAddToCart,
   handleUpdateQuantity,
   showToast,
+  clearCart,
 }) => {
   const [selectedCategory, setSelectedCategory] = useState(categories[0].id);
   const [searchQuery, setSearchQuery] = useState(
@@ -66,6 +67,8 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
       })
       .then((response) => {
         console.log("Compra realizada com sucesso:", response.data);
+        setIsCartOpen(false);
+        clearCart();
         showToast("Compra realizada com sucesso!");
       })
       .catch((error) => {
@@ -136,29 +139,17 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
 
   const cartTotalItems = useMemo(() => {
     return cart.reduce((total, item) => total + item.quantity, 0);
-  }, [cart]);
-
-  const formatMoney = (value: string | number) => {
-    if (typeof value === "number") {
-      value = value.toString();
-    }
-
-    const number = parseFloat(value).toFixed(2);
-    return "R$" + number;
-  };
+  }, [cart, cart.length]);
 
   const cartTotalPrice = useMemo(() => {
     return cart
-      .reduce((total, item) => {
-        const product = allProducts.find((p) => p.id === item.productId);
-        if (!product) return total;
-        const price = parseFloat(
-          product.price.replace("R$ ", "").replace(",", ".")
-        );
-        return total + price * item.quantity;
+      .reduce((max, item) => {
+        const { total } = item;
+        if (!total) return max;
+        return total + max;
       }, 0)
       .toFixed(2);
-  }, [cart, allProducts]);
+  }, [cart, cart.length]);
 
   const Tag = ({
     text,
@@ -524,7 +515,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
                 <div className="flex justify-between items-center mb-4 text-lg">
                   <span className="font-semibold text-slate-700">Total:</span>
                   <span className="font-bold text-slate-900">
-                    R$ {cartTotalPrice.replace(".", ",")}
+                    R$ {formatMoney(cartTotalPrice)}
                   </span>
                 </div>
                 <button

@@ -57,6 +57,8 @@ public class TesteConfig implements CommandLineRunner {
     @Transactional
     public void run (String... args) throws Exception {
 
+
+
         Optional<Categoria> categoria = categoriaRepositorio.findByNome("Analgésicos");
         Categoria cat = new Categoria();
         if (categoria.isEmpty()) {
@@ -89,47 +91,47 @@ public class TesteConfig implements CommandLineRunner {
 
         }
 
-        Map<String, InfoRemedios> InfoRemedios = new HashMap<>();
+        if(produtoRepositorio.count() == 0) {
+            Map<String, InfoRemedios> InfoRemedios = new HashMap<>();
 
-        InfoRemedios.put("Diazepam", new InfoRemedios("ansiolítico e sedativo, indicado para ansiedade intensa, insônia grave e alguns tipos de convulsão", Tarja.PRETA.getCode()));
-        InfoRemedios.put("Amoxicilina", new InfoRemedios("antibiótico muito comum para tratar infecções bacterianas " +
-                "(amigdalite, otite, sinusite, etc.)", Tarja.VERMELHA.getCode()));
-        InfoRemedios.put("Ciprofloxacino", new InfoRemedios("antibiótico de amplo espectro, indicado para infecções " +
-                "urinárias, respiratórias e gastrointestinais", Tarja.AMARELA.getCode()));
-        InfoRemedios.put("Paracetamol", new InfoRemedios("analgésico e antitérmico para dor leve a moderada (dor de " +
-                "cabeça, febre, gripe)", Tarja.SEM_TARJA.getCode()));
-        InfoRemedios.put("Dipirona ", new InfoRemedios("analgésico e antitérmico, indicado para dores em geral e " +
-                "febre.", Tarja.SEM_TARJA.getCode()));
-        //InfoRemedios.put("Dipirona 500mg","" );
+            InfoRemedios.put("Diazepam", new InfoRemedios("ansiolítico e sedativo, indicado para ansiedade intensa, insônia grave e alguns tipos de convulsão", Tarja.PRETA.getCode()));
+            InfoRemedios.put("Amoxicilina", new InfoRemedios("antibiótico muito comum para tratar infecções bacterianas " +
+                    "(amigdalite, otite, sinusite, etc.)", Tarja.VERMELHA.getCode()));
+            InfoRemedios.put("Ciprofloxacino", new InfoRemedios("antibiótico de amplo espectro, indicado para infecções " +
+                    "urinárias, respiratórias e gastrointestinais", Tarja.AMARELA.getCode()));
+            InfoRemedios.put("Paracetamol", new InfoRemedios("analgésico e antitérmico para dor leve a moderada (dor de " +
+                    "cabeça, febre, gripe)", Tarja.SEM_TARJA.getCode()));
+            InfoRemedios.put("Dipirona ", new InfoRemedios("analgésico e antitérmico, indicado para dores em geral e " +
+                    "febre.", Tarja.SEM_TARJA.getCode()));
+            //InfoRemedios.put("Dipirona 500mg","" );
 
 
-        for (Map.Entry<String, InfoRemedios> entry : InfoRemedios.entrySet()) {
-            String nome_medicamento = entry.getKey();
-            String descricao_medicamento = entry.getValue().descricao();
-            int tarja_medicamento = entry.getValue().tarjaCode();
+            for (Map.Entry<String, InfoRemedios> entry : InfoRemedios.entrySet()) {
+                String nome_medicamento = entry.getKey();
+                String descricao_medicamento = entry.getValue().descricao();
+                int tarja_medicamento = entry.getValue().tarjaCode();
 
-            Optional<Produto> medicamento = produtoRepositorio.findByNomeproduto(nome_medicamento);
-            if (medicamento.isEmpty()) {
+                Optional<Produto> medicamento = produtoRepositorio.findByNomeproduto(nome_medicamento);
+                if (medicamento.isEmpty()) {
 
-                Medicamento med = new Medicamento();
-                med.setNomeproduto(nome_medicamento);
-                med.setDescricao_produto(descricao_medicamento);
-                med.setPreco_produto(5.50);
-                med.setEstoque_produto(100);
-                med.setTarja(tarja_medicamento);
+                    Medicamento med = new Medicamento();
+                    med.setNomeproduto(nome_medicamento);
+                    med.setDescricao_produto(descricao_medicamento);
+                    med.setPreco_produto(5.50);
+                    med.setEstoque_produto(100);
+                    med.setTarja(tarja_medicamento);
 
-                //verificar a linkagem de categoria no produto
-                med.getCategorias().add(cat);
-                produtoRepositorio.save(med);
+                    //verificar a linkagem de categoria no produto
+                    med.getCategorias().add(cat);
+                    produtoRepositorio.save(med);
+                }
             }
+
+
         }
 
-        Produto nao_remedio = new Produto();
-        nao_remedio.setNomeproduto("Água coca latão");
-        nao_remedio.setDescricao_produto("Pra gringo é mais caro e pra prof de Competências!!!");
-        nao_remedio.setPreco_produto(745);
-        nao_remedio.setEstoque_produto(3);
-        produtoRepositorio.save(nao_remedio);
+
+
 
 
         if (entregadorRepositorio.count() == 0) {
@@ -204,7 +206,15 @@ public class TesteConfig implements CommandLineRunner {
                 pp3.setPreco_produto(1000);
                 pp3.setEstoque_produto(1);
 
-                produtoRepositorio.saveAll(Arrays.asList(pp1, pp2, pp3));
+                Produto nao_remedio = new Produto();
+                nao_remedio.setNomeproduto("Água coca latão");
+                nao_remedio.setDescricao_produto("Pra gringo é mais caro e pra prof de Competências!!!");
+                nao_remedio.setPreco_produto(745);
+                nao_remedio.setEstoque_produto(3);
+
+
+
+                produtoRepositorio.saveAll(Arrays.asList(pp1, pp2, pp3,  nao_remedio));
 
                 ItemPedido itemPedido = new ItemPedido(pedido, nao_remedio, 2, nao_remedio.getPreco_produto());
                 ItemPedido itemPedido2 = new ItemPedido(pedido, pp3, 2, pp3.getPreco_produto());
@@ -218,61 +228,67 @@ public class TesteConfig implements CommandLineRunner {
 
         }
 
-
-        Farmacia farmacia1 = new Farmacia();
-        farmacia1.setCnpj("11.111.111/0001-01");
-        farmacia1.setNome("Farmácia Viva Bem");
-        farmacia1.setRazaoSocial("Viva Bem Remédios S/A");
-
-
-        Set<String> contatos1 = new HashSet<>();
-        contatos1.add("farmacia.viva@email.com");
-        contatos1.add("(11) 3333-4444");
-        farmacia1.setContato(contatos1);
+        if(farmaciaRepositorio.count() == 0) {
+            Farmacia farmacia1 = new Farmacia();
+            farmacia1.setCnpj("11.111.111/0001-01");
+            farmacia1.setNome("Farmácia Viva Bem");
+            farmacia1.setRazaoSocial("Viva Bem Remédios S/A");
 
 
-        farmacia1.setHorarioAbertura(Time.valueOf(LocalTime.of(8, 0, 0))); // 08:00:00
-        farmacia1.setHorarioFechamento(Time.valueOf(LocalTime.of(22, 0, 0))); // 22:00:00
+            Set<String> contatos1 = new HashSet<>();
+            contatos1.add("farmacia.viva@email.com");
+            contatos1.add("(11) 3333-4444");
+            farmacia1.setContato(contatos1);
 
 
-
-
-        Farmacia farmacia2 = new Farmacia();
-        farmacia2.setCnpj("22.222.222/0001-02");
-        farmacia2.setNome("Drogaria Noite e Dia");
-        farmacia2.setRazaoSocial("Comércio de Medicamentos 24h Ltda");
-
-
-        Set<String> contatos2 = new HashSet<>();
-        contatos2.add("(21) 98765-4321"); // Apenas um contato
-        farmacia2.setContato(contatos2);
-
-
-        farmacia2.setHorarioAbertura(Time.valueOf("00:00:00"));
-        farmacia2.setHorarioFechamento(Time.valueOf("23:59:59")); // Usando a string helper
+            farmacia1.setHorarioAbertura(Time.valueOf(LocalTime.of(8, 0, 0))); // 08:00:00
+            farmacia1.setHorarioFechamento(Time.valueOf(LocalTime.of(22, 0, 0))); // 22:00:00
 
 
 
 
-        Farmacia farmacia3 = new Farmacia();
-        farmacia3.setCnpj("33.333.333/0001-03");
-        farmacia3.setNome("Farmácia Popular");
-        farmacia3.setRazaoSocial("Farmácia Popular da Silva ME");
+            Farmacia farmacia2 = new Farmacia();
+            farmacia2.setCnpj("22.222.222/0001-02");
+            farmacia2.setNome("Drogaria Noite e Dia");
+            farmacia2.setRazaoSocial("Comércio de Medicamentos 24h Ltda");
 
 
-        farmacia3.setContato(Set.of("atendimento@popular.com.br", "(31) 5555-6666", "(31) 7777-8888"));
+            Set<String> contatos2 = new HashSet<>();
+            contatos2.add("(21) 98765-4321"); // Apenas um contato
+            farmacia2.setContato(contatos2);
 
 
-        farmacia3.setHorarioAbertura(Time.valueOf(LocalTime.of(9, 30, 0))); // 09:30:00
-        farmacia3.setHorarioFechamento(Time.valueOf(LocalTime.of(19, 30, 0))); // 19:30:00
+            farmacia2.setHorarioAbertura(Time.valueOf("00:00:00"));
+            farmacia2.setHorarioFechamento(Time.valueOf("23:59:59")); // Usando a string helper
 
-        farmaciaRepositorio.saveAll(Arrays.asList(farmacia1, farmacia2, farmacia3));
 
-        var pagamento1 = new Pagamento(PagamentoTipo.Crédito);
-        var pagamento2 = new Pagamento(PagamentoTipo.Dinheiro);
-        var pagamento3 = new Pagamento(PagamentoTipo.Pix);
-        var pagamento4 = new Pagamento(PagamentoTipo.Débito);
-        pagamentoRepository.saveAll(Arrays.asList(pagamento1, pagamento2, pagamento3, pagamento4));
+
+
+            Farmacia farmacia3 = new Farmacia();
+            farmacia3.setCnpj("33.333.333/0001-03");
+            farmacia3.setNome("Farmácia Popular");
+            farmacia3.setRazaoSocial("Farmácia Popular da Silva ME");
+
+
+            farmacia3.setContato(Set.of("atendimento@popular.com.br", "(31) 5555-6666", "(31) 7777-8888"));
+
+
+            farmacia3.setHorarioAbertura(Time.valueOf(LocalTime.of(9, 30, 0))); // 09:30:00
+            farmacia3.setHorarioFechamento(Time.valueOf(LocalTime.of(19, 30, 0))); // 19:30:00
+
+            farmaciaRepositorio.saveAll(Arrays.asList(farmacia1, farmacia2, farmacia3));
+
+        }
+
+
+        if(pagamentoRepository.count() == 0) {
+            var pagamento1 = new Pagamento(PagamentoTipo.Crédito);
+            var pagamento2 = new Pagamento(PagamentoTipo.Dinheiro);
+            var pagamento3 = new Pagamento(PagamentoTipo.Pix);
+            var pagamento4 = new Pagamento(PagamentoTipo.Débito);
+            pagamentoRepository.saveAll(Arrays.asList(pagamento1, pagamento2, pagamento3, pagamento4));
+        }
+
     }
 
 }

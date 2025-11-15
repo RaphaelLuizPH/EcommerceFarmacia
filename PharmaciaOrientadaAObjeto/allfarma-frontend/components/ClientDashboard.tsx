@@ -27,6 +27,10 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({
     setProfileView("main");
   }, [activeTab]);
 
+  const clearCart = () => {
+    setCart([]);
+  };
+
   useEffect(() => {
     const storedCart = localStorage.getItem("shoppingCart");
     if (storedCart) {
@@ -56,9 +60,14 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({
         (item) => item.product.id_produto === product.id_produto
       );
       if (existingItem) {
+        const newQuantity = existingItem.quantity + quantity;
         return prevCart.map((item) =>
           item.product.id_produto === product.id_produto
-            ? { ...item, quantity: item.quantity + quantity }
+            ? {
+                ...item,
+                quantity: newQuantity,
+                total: product.preco_produto * newQuantity,
+              }
             : item
         );
       } else {
@@ -132,6 +141,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({
             handleAddToCart={handleAddToCart}
             handleUpdateQuantity={handleUpdateQuantity}
             showToast={showToast}
+            clearCart={clearCart}
           />
         );
       case "pharmacies":
