@@ -1,6 +1,6 @@
 package marketplace.PharmaciaOrientadaAObjeto; // Pacote principal do seu projeto
 
-import marketplace.PharmaciaOrientadaAObjeto.helpers.CadastroHelper;
+import marketplace.PharmaciaOrientadaAObjeto.helpers.CadastroService;
 import marketplace.PharmaciaOrientadaAObjeto.model.Farmacia.Farmacia;
 import marketplace.PharmaciaOrientadaAObjeto.model.Pagamento.Pagamento;
 import marketplace.PharmaciaOrientadaAObjeto.model.Pagamento.PagamentoTipo;
@@ -16,6 +16,7 @@ import marketplace.PharmaciaOrientadaAObjeto.model.Usuario.Cliente;
 import marketplace.PharmaciaOrientadaAObjeto.model.Usuario.Entregador;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Time;
@@ -35,22 +36,24 @@ public class TesteConfig implements CommandLineRunner {
 
     private final PedidoRepositorio pedidoRepositorio;
     private final ClienteRepositorio clienteRepositorio;
-    private final CadastroHelper cadastroHelper;
+    private final CadastroService cadastroService;
     private final ItemPedidoRepositorio itemPedidoRepositorio;
     private final PagamentoRepository pagamentoRepository;
+    private final MongoOperations mongo;
 
     public TesteConfig (ProdutoRepositorio produtoRepositorio, CategoriaRepositorio categoriaRepositorio, FarmaciaRepositorio farmaciaRepositorio,
-                        EntregadorRepositorio entregadorRepositorio, CadastroHelper cadastroHelper, ClienteRepositorio clienteRepositorio,
-                        PedidoRepositorio pedidoRepositorio, ItemPedidoRepositorio itemPedidoRepositorio, PagamentoRepository pagamentoRepository) {
+                        EntregadorRepositorio entregadorRepositorio, CadastroService cadastroService, ClienteRepositorio clienteRepositorio,
+                        PedidoRepositorio pedidoRepositorio, ItemPedidoRepositorio itemPedidoRepositorio, PagamentoRepository pagamentoRepository, MongoOperations mongoOperations) {
         this.produtoRepositorio = produtoRepositorio;
         this.categoriaRepositorio = categoriaRepositorio;
         this.farmaciaRepositorio = farmaciaRepositorio;
         this.entregadorRepositorio = entregadorRepositorio;
-        this.cadastroHelper = cadastroHelper;
+        this.cadastroService = cadastroService;
         this.pedidoRepositorio = pedidoRepositorio;
         this.clienteRepositorio = clienteRepositorio;
         this.itemPedidoRepositorio = itemPedidoRepositorio;
         this.pagamentoRepository = pagamentoRepository;
+        this.mongo = mongoOperations;
     }
 
     @Override
@@ -171,10 +174,10 @@ public class TesteConfig implements CommandLineRunner {
             cliente.setNome("Cliente Demonstração");
             cliente.setCpf("0987654321");
             cliente.setEmail("saverun@123.com");
-            cliente.setSenha(  cadastroHelper.criptografar("123456"));
+            cliente.setSenha(  cadastroService.criptografar("123456"));
             cliente.setDataNasc(LocalDate.parse("1990-12-01"));
             cliente.setTelefone("61994154040");
-            cliente.setEnderecoCliente(cadastroHelper.buscarEndereco("71966700", "1"));
+            cliente.setEnderecoCliente(cadastroService.buscarEndereco("71966700", "1"));
             clienteRepositorio.save(cliente);
 
             Pedido pedido = new Pedido(Instant.parse("2025-10-29T19:53:07Z"), StatusPedido.AGUARDANDO_PAGAMENTO,
@@ -289,6 +292,10 @@ public class TesteConfig implements CommandLineRunner {
             pagamentoRepository.saveAll(Arrays.asList(pagamento1, pagamento2, pagamento3, pagamento4));
         }
 
+
+
+
     }
+
 
 }

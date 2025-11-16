@@ -37,6 +37,21 @@ services:
         dockerfile: Dockerfile-frontend
       ports:
         - "5173:80"
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongodb_data:/data/db
+      - ./init-scripts:/docker-entrypoint-initdb.d
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
+      - MONGO_INITDB_DATABASE=farmacia_oo
+    restart: unless-stopped
+
+
 
   mysql:
     image: mysql:8.0
@@ -66,3 +81,5 @@ networks:
 
 volumes:
   mysql_data:
+  mongodb_data:
+      driver: local

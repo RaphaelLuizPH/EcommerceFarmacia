@@ -7,6 +7,7 @@ import HistoricoDePedidos from "./HistoricoDePedidos";
 import UserDataScreen from "./UserDataScreen";
 import { CartItem, Product } from "../types";
 import ToastNotification from "./ToastNotification";
+import api from "@/axios/axios";
 
 interface ClientDashboardProps {
   onLogout: () => void;
@@ -29,25 +30,44 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({
 
   const clearCart = () => {
     setCart([]);
+
+    api.post("/carrinho", { cliente_id: 1, itensCarrinho: [] });
   };
 
   useEffect(() => {
-    const storedCart = localStorage.getItem("shoppingCart");
-    if (storedCart) {
-      try {
-        const parsedCart = JSON.parse(storedCart);
-        if (Array.isArray(parsedCart)) {
-          setCart(parsedCart);
-        }
-      } catch (e) {
-        console.error("Failed to parse cart from localStorage", e);
-        setCart([]);
-      }
+    try {
+      api.get("/carrinho", { params: { cliente_id: 1 } }).then((response) => {
+        console.log("Carrinho carregado do servidor:", response.data);
+
+        const normalizedCart = response.data.itensCarrinho.map((item) => ({
+          product: item.produto,
+          quantity: item.quantidade,
+          total: item.total,
+        }));
+
+        const savedCart = [...normalizedCart];
+        setCart(savedCart);
+        console.log("Carrinho definido no estado:", savedCart);
+      });
+    } catch (e) {
+      console.error("Failed to parse cart from localStorage", e);
+      setCart([]);
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("shoppingCart", JSON.stringify(cart));
+    console.log("Sincronizando carrinho com o servidor:", cart);
+    if (cart.length === 0) {
+      return;
+    }
+
+    const normalizedCart = cart.map((item) => ({
+      produto: item.product,
+      quantidade: item.quantity,
+      total: item.total,
+    }));
+
+    api.post("/carrinho", { cliente_id: 1, itensCarrinho: normalizedCart });
   }, [cart]);
 
   const showToast = (message: string) => {
@@ -77,7 +97,7 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({
         ];
       }
     });
-    console.log("Produto adicionado ao carrinho:", product);
+
     showToast(`${product.nomeproduto} adicionado ao carrinho!`);
   };
 
@@ -86,6 +106,10 @@ const ClientDashboard: React.FC<ClientDashboardProps> = ({
       setCart((prevCart) =>
         prevCart.filter((item) => item.product.id_produto !== productId)
       );
+
+      if (cart.length === 1) {
+        clearCart();
+      }
     } else {
       setCart((prevCart) =>
         prevCart.map((item) =>

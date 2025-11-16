@@ -50,7 +50,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
   const [products, setProducts] = useState<any[]>([]);
 
   const handleBuy = () => {
-    console.log("Finalizando compra com os itens do carrinho:", cart);
+    
     const productIds = [];
     cart.forEach((item) => {
       for (let i = 0; i < item.quantity; i++) {
@@ -66,7 +66,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
         pagamento: 1,
       })
       .then((response) => {
-        console.log("Compra realizada com sucesso:", response.data);
+   
         setIsCartOpen(false);
         clearCart();
         showToast("Compra realizada com sucesso!");
@@ -445,7 +445,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
                   {cart.map((item) => {
                     const { product, quantity, total } = item;
 
-                    console.log("Renderizando item do carrinho:", item);
+                 
                     if (!product) return null;
                     return (
                       <li key={product.id_produto} className="py-4 flex gap-4">

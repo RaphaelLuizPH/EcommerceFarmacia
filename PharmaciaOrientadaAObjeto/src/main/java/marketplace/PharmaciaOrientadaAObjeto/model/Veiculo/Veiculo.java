@@ -15,7 +15,7 @@ public class Veiculo {
     @Id
     private String placa;
 
-    @JoinColumn(name = "CNH_entregador")
+    @JoinColumn(name = "CNH_entregador", referencedColumnName = "CNH")
     @OneToOne
     private Entregador entregador;
 

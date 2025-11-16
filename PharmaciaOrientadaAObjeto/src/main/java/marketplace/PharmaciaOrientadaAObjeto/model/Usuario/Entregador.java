@@ -11,12 +11,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
+
 public class Entregador extends Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @EqualsAndHashCode.Include
+    @Column(nullable = false, unique = true)
     private String CNH;
 
     private boolean ativo = true;

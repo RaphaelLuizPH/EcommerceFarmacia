@@ -1,17 +1,20 @@
 package marketplace.PharmaciaOrientadaAObjeto.DTOs;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import marketplace.PharmaciaOrientadaAObjeto.model.Produto.Categoria;
 import marketplace.PharmaciaOrientadaAObjeto.model.Produto.Produto;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class ProdutoDTO implements Serializable {
-    private final Set<Categoria> categorias;
+    private  Set<Categoria> categorias = new HashSet<>();
     private int ID_produto;
     private String nomeproduto;
     private String descricao_produto;
@@ -25,7 +28,8 @@ public class ProdutoDTO implements Serializable {
         this.descricao_produto = produto.getDescricao_produto();
         this.preco_produto = produto.getPreco_produto();
         this.categorias = produto.getCategorias();
-        this. estoque_produto = produto.getEstoque_produto();
+        this.estoque_produto = produto.getEstoque_produto();
+
     }
 
 

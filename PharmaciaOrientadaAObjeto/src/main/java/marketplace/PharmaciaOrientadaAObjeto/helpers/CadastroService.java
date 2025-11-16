@@ -3,6 +3,7 @@ package marketplace.PharmaciaOrientadaAObjeto.helpers;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import marketplace.PharmaciaOrientadaAObjeto.DTOs.LoginDTO;
 import marketplace.PharmaciaOrientadaAObjeto.repository.ClienteRepositorio;
 import marketplace.PharmaciaOrientadaAObjeto.repository.EntregadorRepositorio;
 import marketplace.PharmaciaOrientadaAObjeto.service.CepService;
@@ -15,7 +16,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 @Component
-public class CadastroHelper {
+public class CadastroService {
 
     private final ClienteRepositorio  clienteRepositorio;
     private  final EntregadorRepositorio entregadorRepositorio;
@@ -42,9 +43,27 @@ public class CadastroHelper {
 
     }
 
-    public  boolean verificar(String senha, String hash) {
 
-        var result = BCrypt.verifyer().verify(hash.toCharArray(), senha.toCharArray());
+    public boolean login(LoginDTO loginDTO) {
+
+        var cliente = clienteRepositorio.getFirstByEmail(loginDTO.email()).stream().findFirst();
+
+        if(cliente.isPresent()) {
+            Cliente found = cliente.get();
+
+            return verificar(loginDTO.senha(), found.getSenha());
+
+        }
+
+
+        return false;
+    }
+
+
+
+    public boolean verificar(String senha, String hash) {
+
+        var result = BCrypt.verifyer().verify( senha.toCharArray(), hash.toCharArray());
 
 
        return result.verified;

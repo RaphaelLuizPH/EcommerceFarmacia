@@ -31,7 +31,7 @@ const ForgotPasswordScreen: React.FC<ForgotPasswordScreenProps> = ({ onBackToLog
     }
     setError('');
     // Simulate API call
-    console.log('Password reset requested for:', email);
+    
     setIsEmailSent(true);
   };
   

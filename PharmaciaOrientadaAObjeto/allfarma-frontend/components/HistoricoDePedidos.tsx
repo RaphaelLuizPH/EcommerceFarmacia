@@ -124,7 +124,7 @@ export default function HistoricoScreen() {
                                     Qtd: {item.quantidade}
                                   </p>
                                 </div>
-                                <p className="text-sm font-semibold text-slate-700">
+                                <p className="text-sm font-semibold text-slate-700" style={{ minWidth: 80, textAlign: "right" }}>
                                   {formatMoney(item.preco * item.quantidade)}
                                   <span
                                     className="text-info text-info"

@@ -1,6 +1,6 @@
 package marketplace.PharmaciaOrientadaAObjeto.service;
 
-import marketplace.PharmaciaOrientadaAObjeto.helpers.CadastroHelper;
+import marketplace.PharmaciaOrientadaAObjeto.helpers.CadastroService;
 import marketplace.PharmaciaOrientadaAObjeto.repository.ClienteRepositorio;
 
 
@@ -18,7 +18,7 @@ public class ClienteService {
 
 
     private final ClienteRepositorio repositorio;
-    private  final CadastroHelper  cadastroHelper;
+    private  final CadastroService cadastroService;
 
 
     public List<Cliente> GetAll() {
@@ -32,9 +32,9 @@ public class ClienteService {
            throw new DuplicateKeyException("Entidade com esse ID já existe.");
         }
 
-        var senhaCripto = cadastroHelper.criptografar(cliente.getSenha());
+        var senhaCripto = cadastroService.criptografar(cliente.getSenha());
         var requestEndereco = cliente.getEnderecoCliente();
-        var endereco = cadastroHelper.buscarEndereco(requestEndereco.getCep(), requestEndereco.getCasa());
+        var endereco = cadastroService.buscarEndereco(requestEndereco.getCep(), requestEndereco.getCasa());
         cliente.setEnderecoCliente(endereco);
         cliente.setSenha(senhaCripto);
 

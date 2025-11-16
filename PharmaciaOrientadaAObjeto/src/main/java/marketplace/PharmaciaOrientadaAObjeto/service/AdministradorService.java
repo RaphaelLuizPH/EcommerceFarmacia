@@ -3,7 +3,7 @@
 package marketplace.PharmaciaOrientadaAObjeto.Service;
 
 import lombok.RequiredArgsConstructor;
-import marketplace.PharmaciaOrientadaAObjeto.helpers.CadastroHelper;
+import marketplace.PharmaciaOrientadaAObjeto.helpers.CadastroService;
 import marketplace.PharmaciaOrientadaAObjeto.DTOs.AdminDTO;
 import marketplace.PharmaciaOrientadaAObjeto.repository.AdministradorRepositorio;
 
@@ -21,7 +21,7 @@ public class AdministradorService {
 
     private final AdministradorRepositorio repositorio;
     private final FarmaciaRepositorio farmaciaRepositorio;
-    private final CadastroHelper cadastroHelper;
+    private final CadastroService cadastroService;
 
 
     public List<AdminDTO> GetAll() {
@@ -34,7 +34,7 @@ public class AdministradorService {
         
         var newAdministrador = new Administrador();
         
-        var senha = cadastroHelper.criptografar(admin.getSenha());
+        var senha = cadastroService.criptografar(admin.getSenha());
         
         newAdministrador.setSenha(senha);
         newAdministrador.setNome(admin.getNome());
