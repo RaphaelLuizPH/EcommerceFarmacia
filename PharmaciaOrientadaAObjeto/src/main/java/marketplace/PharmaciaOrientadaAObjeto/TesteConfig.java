@@ -211,18 +211,13 @@ public class TesteConfig implements CommandLineRunner {
 
                 Produto nao_remedio = new Produto();
                 nao_remedio.setNomeproduto("Água coca latão");
-                nao_remedio.setDescricao_produto("Pra gringo é mais caro e pra prof de Competências tbm!!!");
+                nao_remedio.setDescricao_produto("Pra gringo é mais caro e pra prof de Competências!!!");
                 nao_remedio.setPreco_produto(745);
                 nao_remedio.setEstoque_produto(3);
-                
-                Produto nao_remediofeliz = new Produto();
-                nao_remediofeliz.setNomeproduto("Barril del Ocho");
-                nao_remediofeliz.setDescricao_produto("Pra gringo é mais caro e pra prof de Competências tbm!!!");
-                nao_remediofeliz.setPreco_produto(1_000_000_000);
-                nao_remediofeliz.setEstoque_produto(1);
 
 
-                produtoRepositorio.saveAll(Arrays.asList(pp1, pp2, pp3,  nao_remedio, nao_remediofeliz));
+
+                produtoRepositorio.saveAll(Arrays.asList(pp1, pp2, pp3,  nao_remedio));
 
                 ItemPedido itemPedido = new ItemPedido(pedido, nao_remedio, 2, nao_remedio.getPreco_produto());
                 ItemPedido itemPedido2 = new ItemPedido(pedido, pp3, 2, pp3.getPreco_produto());
