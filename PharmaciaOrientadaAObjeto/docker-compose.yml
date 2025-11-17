@@ -16,7 +16,10 @@ services:
       SPRING_DATASOURCE_PASSWORD: pharmacia_pass
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_JPA_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
-
+      SPRING_DATA_MONGODB_URI: mongodb://mongodb:27017/farmacia_oo
+      SPRING_DATA_MONGODB_DATABASE: farmacia_oo
+      SPRING_DATA_MONGODB_HOST: mongodb
+      SPRING_DATA_MONGODB_PORT: 27017
 
       JAVA_OPTS: -Xms256m -Xmx512m
     ports:
@@ -35,8 +38,11 @@ services:
       build:
         context: .
         dockerfile: Dockerfile-frontend
+      networks:
+        - backend
       ports:
         - "5173:80"
+
   mongodb:
     image: mongo:latest
     container_name: mongodb
@@ -46,17 +52,18 @@ services:
       - mongodb_data:/data/db
       - ./init-scripts:/docker-entrypoint-initdb.d
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=password
       - MONGO_INITDB_DATABASE=farmacia_oo
     restart: unless-stopped
-
-
+    networks:
+      - backend
 
   mysql:
     image: mysql:8.0
     container_name: mysql
     restart: unless-stopped
+    depends_on:
+      mongodb:
+        condition: service_started
     environment:
       MYSQL_ROOT_PASSWORD: root_pass
       MYSQL_DATABASE: farmacia_oo

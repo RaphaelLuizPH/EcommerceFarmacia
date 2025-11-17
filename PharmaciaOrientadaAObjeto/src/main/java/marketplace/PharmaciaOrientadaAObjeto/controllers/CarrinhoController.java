@@ -2,6 +2,7 @@ package marketplace.PharmaciaOrientadaAObjeto.controllers;
 
 import com.mongodb.client.result.UpdateResult;
 import marketplace.PharmaciaOrientadaAObjeto.model.Carrinho.Carrinho;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.BasicQuery;
@@ -17,7 +18,8 @@ import static org.springframework.data.mongodb.core.query.Update.update;
 @RequestMapping("/carrinho")
 class CarrinhoController {
 
-        private final MongoOperations mongodb;
+    @Autowired
+    private final MongoOperations mongodb;
 
     CarrinhoController(MongoOperations mongodb) {
         this.mongodb = mongodb;
