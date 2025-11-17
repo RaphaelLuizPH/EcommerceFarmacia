@@ -1,5 +1,6 @@
 package marketplace.PharmaciaOrientadaAObjeto.configuration;
 
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -22,10 +23,14 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requests ->
-                        requests.requestMatchers("/auth/**").permitAll().anyRequest().authenticated()
+                    requests
+                            .requestMatchers("/auth/**", "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**", "/", "/webjars/**", "/v3/api-docs/swagger-config")
+                            .permitAll().requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll().anyRequest().authenticated()
                 )
                 .cors(Customizer.withDefaults())
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults())); //permitindo todas as requisições
+
+
         return http.build();
         
     }

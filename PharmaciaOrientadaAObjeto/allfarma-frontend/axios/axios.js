@@ -14,9 +14,12 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
+    setAuthToken();
     if (jwtToken) {
       config.headers = config.headers || {};
       config.headers.Authorization = `Bearer ${jwtToken}`;
+    } else {
+      setAuthToken();
     }
     return config;
   },
@@ -28,6 +31,10 @@ api.interceptors.request.use(
  * @param {string|null} token JWT access token (raw, without 'Bearer ' prefix). Pass null to clear.
  */
 export function setAuthToken(token) {
+  if (!token) {
+    token = sessionStorage.getItem("token");
+  }
+
   jwtToken = token;
   if (token) {
     api.defaults.headers.common.Authorization = `Bearer ${token}`;

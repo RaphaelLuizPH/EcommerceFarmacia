@@ -5,6 +5,7 @@ import com.nimbusds.jose.jwk.source.ImmutableSecret;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
@@ -12,28 +13,42 @@ import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 @Configuration
 public class JwtConfig {
-    
+
     @Value("${jwt.secret}")
     private String jwtSecret;
-    
+
+
     private SecretKey getSecretKey() {
-        byte[] encodedKey = Base64.getEncoder().encode(jwtSecret.getBytes());
-        return new SecretKeySpec(encodedKey, 0, encodedKey.length, "AES");
+        byte[] keyBytes;
+        try {
+
+            keyBytes = Base64.getDecoder().decode(jwtSecret);
+        } catch (IllegalArgumentException ex) {
+
+            keyBytes = jwtSecret.getBytes(StandardCharsets.UTF_8);
+        }
+
+        return new SecretKeySpec(keyBytes, "HmacSHA256");
     }
-    
+
+
+
     @Bean
-    public JwtEncoder jwtEncoder(){
+    public JwtEncoder JwtEncoder(){
         SecretKey secretKey = getSecretKey();
         return new NimbusJwtEncoder(new ImmutableSecret<>(secretKey));
     }
-    
+
     @Bean
-    public JwtDecoder jwtDecoder(){
+    public JwtDecoder jwtDecoder() {
         SecretKey secretKey = getSecretKey();
-        return NimbusJwtDecoder.withSecretKey(secretKey).build();
+        return NimbusJwtDecoder.withSecretKey(secretKey)
+                .macAlgorithm(MacAlgorithm.HS256)
+                .build();
     }
 }

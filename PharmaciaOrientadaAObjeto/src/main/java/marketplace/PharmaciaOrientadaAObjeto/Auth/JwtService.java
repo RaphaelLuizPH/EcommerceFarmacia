@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.*;
 import org.springframework.stereotype.Service;
 
@@ -42,22 +44,25 @@ public class JwtService {
     }*/
 
 
-    public String Authenticate(Authentication authentication) {
+    public String Authenticate(UserDetails userDetails) {
 
         Instant now = Instant.now();
         Instant ttl = now.plusSeconds(60 * 60);
 
-        String scopes =  authentication.getAuthorities()
+        String scopes =  userDetails.getAuthorities()
                 .stream().map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(" "));
 
         JwtClaimsSet claims = JwtClaimsSet.builder()
-                .issuer(authentication.getName())
+                .issuer("farmacia-oo")
+                .subject(userDetails.getUsername())
                 .claim("scope", scopes)
                 .issuedAt(now)
                 .expiresAt(ttl)
                 .build();
 
-        return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
+        JwsHeader header = JwsHeader.with(MacAlgorithm.HS256).build();
+        JwtEncoderParameters params = JwtEncoderParameters.from(header, claims);
+        return jwtEncoder.encode(params).getTokenValue();
     }
 }
