@@ -16,26 +16,28 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
+    
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http .authorizeHttpRequests(requests ->
-                        requests.anyRequest().permitAll()
+    public SecurityFilterChain filterChain (HttpSecurity http) throws Exception {
+        http
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(requests ->
+                        requests.requestMatchers("/auth/**").permitAll().anyRequest().authenticated()
                 )
                 .cors(Customizer.withDefaults())
-                .csrf(AbstractHttpConfigurer::disable);
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults())); //permitindo todas as requisições
         return http.build();
-
+        
     }
-
+    
     @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
+    public CorsConfigurationSource corsConfigurationSource () {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(List.of("http://localhost:5173", "http://localhost:80", "http://localhost:3000"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
-
+        
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return source;
