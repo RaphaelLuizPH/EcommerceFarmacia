@@ -40,6 +40,7 @@ class LoginController {
                 var user = userService.loadUserByUsername(loginDTO.email());
                 
                 var token = jwtService.Authenticate(user);
+                System.out.println("\n\n\nTOKEN\n\n\n"+ token + "\n\n\n");
                 
                 
                 return ResponseEntity.ok(new UserDetailsDTO(user, token));
