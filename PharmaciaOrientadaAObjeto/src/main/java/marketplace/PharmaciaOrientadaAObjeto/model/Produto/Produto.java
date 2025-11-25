@@ -73,7 +73,7 @@ public  class Produto implements Serializable {
     }
 
     @ManyToMany(mappedBy = "produtos")
-
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Collection<Transacao> transacoes;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "estoque")

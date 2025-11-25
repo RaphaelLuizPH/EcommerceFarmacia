@@ -33,12 +33,15 @@ class ProdutoController {
     }
     
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Produto> getById(@PathVariable int id) {
+    public ResponseEntity<ProdutoDTO> getById(@PathVariable int id) {
         Produto produto = produtoService.getById(id);
+
+        var produtoDTO = new ProdutoDTO(produto);
+
         if  (produto == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok().body(produto);
+        return ResponseEntity.ok().body(produtoDTO);
     }
 
     @PostMapping()
@@ -59,9 +62,12 @@ class ProdutoController {
     }
     
     @GetMapping("/image/{id}")
-    public ResponseEntity<InputStreamResource> getFotoUrl(@PathVariable String id) throws IOException {
+    public ResponseEntity<InputStreamResource> getFotoUrl(@PathVariable int id) throws IOException {
 
-        Path path = Paths.get(folder, id);
+        var produto = produtoService.getById(id);
+
+
+        Path path = Paths.get(folder, produto.getFotoProdutoUrl());
         if (!Files.exists(path) || !Files.isRegularFile(path)) {
             return ResponseEntity.notFound().build();
         }

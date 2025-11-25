@@ -50,6 +50,7 @@ public class ClienteService {
         return cliente;
     }
 
+    @Transactional
     public void Delete(String clienteId) {
         repositorio.deleteClienteByCpf(clienteId);
     }
