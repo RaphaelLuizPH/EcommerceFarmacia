@@ -42,6 +42,10 @@ public  class Produto implements Serializable {
     private final Set<Categoria> categorias = new HashSet<>();
     
     
+    //adicionando foto ao cadastro do produto
+    @Column(name = "foto_produto_url")
+    private String fotoProdutoUrl;
+    
     /*public Produto() {
     
     }

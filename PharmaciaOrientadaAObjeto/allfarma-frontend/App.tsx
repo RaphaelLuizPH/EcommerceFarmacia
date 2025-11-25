@@ -20,6 +20,8 @@ function App() {
 
   const handleLogout = () => {
     setLoggedInProfile(null);
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("profile");
     setAuthView("login");
   };
 

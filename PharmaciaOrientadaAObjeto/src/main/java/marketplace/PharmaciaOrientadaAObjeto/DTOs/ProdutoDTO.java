@@ -21,6 +21,9 @@ public class ProdutoDTO implements Serializable {
     private double preco_produto;
     private long quantidade_produto;
     private long estoque_produto;
+    
+    //adicionando foto ao cadastro do produto
+    private String fotoProdutoUrl;
 
     public ProdutoDTO(Produto produto) {
         this.ID_produto = produto.getID_produto();
@@ -29,6 +32,8 @@ public class ProdutoDTO implements Serializable {
         this.preco_produto = produto.getPreco_produto();
         this.categorias = produto.getCategorias();
         this.estoque_produto = produto.getEstoque_produto();
+        //adicionando foto ao cadastro do produto
+        this.fotoProdutoUrl = produto.getFotoProdutoUrl();
 
     }
 

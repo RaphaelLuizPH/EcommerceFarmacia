@@ -50,7 +50,6 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
   const [products, setProducts] = useState<any[]>([]);
 
   const handleBuy = () => {
-    
     const productIds = [];
     cart.forEach((item) => {
       for (let i = 0; i < item.quantity; i++) {
@@ -66,7 +65,6 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
         pagamento: 1,
       })
       .then((response) => {
-   
         setIsCartOpen(false);
         clearCart();
         showToast("Compra realizada com sucesso!");
@@ -445,15 +443,21 @@ const HomeScreen: React.FC<HomeScreenProps> = ({
                   {cart.map((item) => {
                     const { product, quantity, total } = item;
 
-                 
                     if (!product) return null;
                     return (
                       <li key={product.id_produto} className="py-4 flex gap-4">
-                        <img
-                          src={product.image}
-                          alt={product.nomeproduto}
-                          className="w-20 h-20 object-contain rounded-md bg-slate-50"
-                        />
+                        {product.image ? (
+                          <img
+                            src={product.image}
+                            alt={product.nomeproduto ?? "produto"}
+                            className="cart-image h-36 object-contain object-center"
+                          />
+                        ) : (
+                          <div   className="cart-image h-36 flex items-center justify-center bg-gray-50">
+                            <PillIcon className="w-10 h-10 text-slate-400" />
+                          </div>
+                        )}
+
                         <div className="flex-grow flex flex-col">
                           <h3 className="text-sm font-semibold text-slate-800">
                             {product.nomeproduto}

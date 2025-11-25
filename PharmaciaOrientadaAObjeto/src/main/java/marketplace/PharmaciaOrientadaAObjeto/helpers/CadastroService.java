@@ -44,19 +44,21 @@ public class CadastroService {
     }
 
 
-    public boolean login(LoginDTO loginDTO) {
+    public Cliente login(LoginDTO loginDTO) {
 
         var cliente = clienteRepositorio.getFirstByEmail(loginDTO.email()).stream().findFirst();
 
         if(cliente.isPresent()) {
             Cliente found = cliente.get();
 
-            return verificar(loginDTO.senha(), found.getSenha());
+            var result = verificar(loginDTO.senha(), found.getSenha());
+
+            if(result) return found;
 
         }
 
 
-        return false;
+        return null;
     }
 
 

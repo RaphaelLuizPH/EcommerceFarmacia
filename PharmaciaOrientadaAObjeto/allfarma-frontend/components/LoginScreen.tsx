@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { ProfileType } from "../types";
 import PillIcon from "./icons/PillIcon";
+import api, { setAuthToken } from "@/axios/axios";
+import { config } from "process";
 
 interface LoginScreenProps {
   onLogin: (profile: ProfileType) => void;
@@ -31,7 +33,14 @@ const LoginScreen: React.FC<LoginScreenProps> = ({
   const [error, setError] = useState("");
   const [isMounted, setIsMounted] = useState(false);
 
-  onLogin(ProfileType.Cliente);
+  function handleLogin() {
+    if (sessionStorage.getItem("profile")) {
+      onLogin(ProfileType.Cliente);
+    }
+  }
+
+  handleLogin();
+
   useEffect(() => {
     const timer = setTimeout(() => setIsMounted(true), 100);
     return () => clearTimeout(timer);
@@ -40,17 +49,17 @@ const LoginScreen: React.FC<LoginScreenProps> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const profileEntry = Object.entries(credentials).find(
-      ([, creds]) => email === creds.email && password === creds.password
-    );
-
-    if (profileEntry) {
-      const [profile] = profileEntry;
-      setError("");
-      onLogin(profile as ProfileType);
-    } else {
-      setError("E-mail ou senha inválidos.");
-    }
+    api
+      .post("/auth", null, { params: { email, senha: password } })
+      .then((response) => {
+        sessionStorage.setItem("token", response.data.token);
+        sessionStorage.setItem("profile", response.data.user);
+        setAuthToken(response.data);
+        onLogin(ProfileType.Cliente);
+      })
+      .catch((error) => {
+        setError("Credenciais inválidas. Por favor, tente novamente.");
+      });
   };
 
   const primaryColor = "#C60650";
