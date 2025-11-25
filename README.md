@@ -28,6 +28,13 @@ Este projeto é uma aplicação completa de e-commerce para farmácias, com func
 - Painel administrativo
 - Integração com banco de dados relacional
 
+### INTEGRANTES DO GRUPO: 
+
+- Luis Felipe Trega
+- Natanael Ferreira Neves
+- Raphael Luiz De Sousa
+- Wagner Serpa Porto
+
 ## 📦 Pré-requisitos
 
 Escolha uma das opções abaixo para executar o projeto:
